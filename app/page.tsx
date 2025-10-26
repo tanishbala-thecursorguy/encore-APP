@@ -99,7 +99,7 @@ export default function HomePage() {
       </div>
 
       {/* Bottom Navigation Bar with Anime Mascot */}
-      <div className="fixed bottom-5 left-0 right-0 z-50 pointer-events-none">
+      <div className="fixed bottom-5 left-0 right-0 z-[9999] pointer-events-none px-4">
         <div className="flex justify-center pb-6 pointer-events-auto">
           <AnimeNavBarDemo />
         </div>
