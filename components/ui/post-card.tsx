@@ -33,9 +33,9 @@ export function PostCard({ username, imageUrl, description, hashtags }: PostProp
   }
 
   return (
-    <div className="w-full max-w-md mx-auto bg-[#012624] text-white rounded-2xl overflow-hidden shadow-lg mb-8">
-      <div className="flex items-center gap-3 p-4">
-        <div className="size-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-600" />
+    <div className="w-full bg-black text-white border-b border-white/10 mb-2">
+      <div className="flex items-center gap-3 px-4 py-3">
+        <div className="size-9 rounded-full bg-gradient-to-br from-green-400 to-emerald-600" />
         <span className="font-semibold">{username}</span>
       </div>
 
@@ -67,28 +67,27 @@ export function PostCard({ username, imageUrl, description, hashtags }: PostProp
         )}
       </motion.div>
 
-      <div className="flex items-center justify-between px-4 py-3">
-        <div className="flex gap-4">
-          <button onClick={() => setLiked(!liked)}>
-            <Heart
-              className={`${
-                liked ? 'fill-green-400 text-green-400' : 'text-white'
-              } transition-all hover:scale-110`}
-            />
-          </button>
+      <div className="flex items-center gap-6 px-4 py-3">
+        <button onClick={() => setLiked(!liked)}>
+          <Heart
+            size={28}
+            className={`${
+              liked ? 'fill-red-500 text-red-500' : 'text-white'
+            } transition-all`}
+          />
+        </button>
 
-          <button onClick={() => setShowComments(true)}>
-            <MessageCircle className="text-white hover:text-green-400 transition-colors hover:scale-110" />
-          </button>
+        <button onClick={() => setShowComments(true)}>
+          <MessageCircle size={28} className="text-white transition-colors" />
+        </button>
 
-          <button onClick={handleShare}>
-            <Share2 className="text-white hover:text-green-400 transition-colors hover:scale-110" />
-          </button>
-        </div>
+        <button onClick={handleShare}>
+          <Share2 size={28} className="text-white transition-colors" />
+        </button>
       </div>
 
       <div className="px-4 pb-4">
-        <p className="text-sm mb-1">
+        <p className="text-sm mb-1.5">
           <span className="font-semibold mr-2">{username}</span>
           {description}
         </p>
