@@ -98,37 +98,10 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* Bottom Navigation Bar - Instagram Style */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-black border-t border-white/10">
-        <div className="flex items-center justify-around py-3 px-4">
-          <Link href="/" className="flex flex-col items-center gap-1 text-white">
-            <Home size={26} strokeWidth={2} />
-          </Link>
-          
-          <Link href="#search" className="flex flex-col items-center gap-1 text-white/70">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
-          </Link>
-          
-          <Link href="/community" className="flex flex-col items-center gap-1 text-white/70">
-            <Users size={26} strokeWidth={2} />
-          </Link>
-          
-          <Link href="#profile" className="flex flex-col items-center gap-1 text-white/70">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </Link>
-          
-          <Link href="#wallet" className="flex flex-col items-center gap-1 text-white/70">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-              <path d="M7 15h.01M2 9.5h20"></path>
-            </svg>
-          </Link>
+      {/* Bottom Navigation Bar with Anime Mascot */}
+      <div className="fixed bottom-5 left-0 right-0 z-50">
+        <div className="flex justify-center pb-6">
+          <AnimeNavBarDemo />
         </div>
       </div>
 
