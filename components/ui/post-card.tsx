@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Heart, MessageCircle, Share2 } from 'lucide-react'
+import { Music2, MessageCircle, Share2 } from 'lucide-react'
 import Image from 'next/image'
 
 interface PostProps {
@@ -13,12 +13,13 @@ interface PostProps {
 }
 
 export function PostCard({ username, imageUrl, description, hashtags }: PostProps) {
-  const [liked, setLiked] = useState(false)
+  const [playing, setPlaying] = useState(false)
   const [showComments, setShowComments] = useState(false)
   const [paused, setPaused] = useState(false)
 
   const handleDoubleClick = () => {
-    setLiked(true)
+    setPlaying(true)
+    setTimeout(() => setPlaying(false), 300)
   }
 
   const handleSingleClick = () => {
@@ -55,24 +56,24 @@ export function PostCard({ username, imageUrl, description, hashtags }: PostProp
           }`}
         />
 
-        {liked && (
+        {playing && (
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1.5 }}
             transition={{ type: 'spring', stiffness: 200, damping: 10 }}
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
           >
-            <Heart size={90} className="text-red-500 opacity-90 fill-red-500" />
+            <Music2 size={90} className="text-green-400 opacity-90" />
           </motion.div>
         )}
       </motion.div>
 
       <div className="flex items-center gap-6 px-4 py-3">
-        <button onClick={() => setLiked(!liked)}>
-          <Heart
+        <button onClick={() => setPlaying(!playing)}>
+          <Music2
             size={28}
             className={`${
-              liked ? 'fill-red-500 text-red-500' : 'text-white'
+              playing ? 'text-green-400' : 'text-white'
             } transition-all`}
           />
         </button>

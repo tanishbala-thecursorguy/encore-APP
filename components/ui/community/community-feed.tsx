@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, MessageCircle, Share2, ArrowLeft } from "lucide-react"
+import { Music2, MessageCircle, Share2, ArrowLeft } from "lucide-react"
 import Image from 'next/image'
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
@@ -208,7 +208,7 @@ export function CommunityFeed() {
                     onClick={() => toggleLike(post.id)}
                     className="flex items-center gap-1.5"
                   >
-                    <Heart
+                    <Music2
                       size={24}
                       className={cn(
                         "transition-all",

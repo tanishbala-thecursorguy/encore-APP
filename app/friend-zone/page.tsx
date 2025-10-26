@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Heart, MessageCircle, Share2, Send, ArrowLeft, UserPlus } from 'lucide-react'
+import { Music2, MessageCircle, Share2, Send, ArrowLeft, UserPlus } from 'lucide-react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
@@ -178,7 +178,7 @@ export default function FriendZonePage() {
                     onClick={() => toggleLike(post.id)}
                     className="flex items-center gap-1.5 transition-colors"
                   >
-                    <Heart 
+                    <Music2 
                       size={22} 
                       className={likedPosts.includes(post.id) ? "fill-pink-500 text-pink-500" : "hover:text-pink-500"}
                     />

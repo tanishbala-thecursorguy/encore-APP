@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Heart, ArrowLeft, Volume2, VolumeX, MessageCircle, Share2 } from "lucide-react"
+import { Music2, ArrowLeft, Volume2, VolumeX, MessageCircle, Share2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
 
@@ -35,7 +35,7 @@ const reels = [
 
 export default function ReelsPage() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [liked, setLiked] = useState<number | null>(null)
+  const [playing, setPlaying] = useState<number | null>(null)
   const [muted, setMuted] = useState(true)
   const [showComments, setShowComments] = useState(false)
   const router = useRouter()
@@ -52,8 +52,8 @@ export default function ReelsPage() {
   }
 
   const handleDoubleClick = (index: number) => {
-    setLiked(index)
-    setTimeout(() => setLiked(null), 1000)
+    setPlaying(index)
+    setTimeout(() => setPlaying(null), 1000)
   }
 
   const handleShare = () => {
@@ -120,9 +120,9 @@ export default function ReelsPage() {
           {/* Dark overlay for better text visibility */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60" />
 
-          {/* Like animation */}
+          {/* Music animation */}
           <AnimatePresence>
-            {liked === index && (
+            {playing === index && (
               <motion.div
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1.5, opacity: 0.9 }}
@@ -130,7 +130,7 @@ export default function ReelsPage() {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
               >
-                <Heart size={120} className="text-green-400 fill-green-400" />
+                <Music2 size={120} className="text-green-400" />
               </motion.div>
             )}
           </AnimatePresence>
@@ -143,16 +143,16 @@ export default function ReelsPage() {
 
           {/* Right side actions */}
           <div className="absolute bottom-32 right-4 flex flex-col gap-6 z-20">
-            {/* Like Button */}
+            {/* Music Button */}
             <motion.button
               whileTap={{ scale: 0.8 }}
               onClick={() => handleDoubleClick(index)}
               className="flex flex-col items-center"
             >
               <div className="bg-[#024c46]/60 backdrop-blur-sm p-3 rounded-full">
-                <Heart
+                <Music2
                   size={28}
-                  className={liked === index ? "text-green-400 fill-green-400" : "text-white"}
+                  className={playing === index ? "text-green-400" : "text-white"}
                 />
               </div>
               <span className="text-xs text-white mt-1">49.3K</span>
