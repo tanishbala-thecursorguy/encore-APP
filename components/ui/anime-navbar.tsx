@@ -65,8 +65,14 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                 key={item.name}
                 href={item.url}
                 onClick={(e) => {
-                  e.preventDefault()
-                  setActiveTab(item.name)
+                  if (item.url === "/search") {
+                    // Allow navigation for search
+                    setActiveTab(item.name)
+                  } else {
+                    // Prevent navigation for other buttons (static)
+                    e.preventDefault()
+                    setActiveTab(item.name)
+                  }
                 }}
                 onMouseEnter={() => setHoveredTab(item.name)}
                 onMouseLeave={() => setHoveredTab(null)}
