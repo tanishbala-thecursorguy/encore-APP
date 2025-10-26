@@ -46,7 +46,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
     <div className="w-full">
       <div className="flex justify-center">
         <motion.div 
-          className="flex items-center gap-3 bg-black/40 backdrop-blur-md border border-white/20 py-2 px-2 rounded-full relative shadow-lg"
+          className="flex items-center gap-3 bg-transparent py-2 px-2 rounded-full relative"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{
@@ -65,14 +65,8 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                 key={item.name}
                 href={item.url}
                 onClick={(e) => {
-                  if (item.url === "/search") {
-                    // Allow navigation for search
-                    setActiveTab(item.name)
-                  } else {
-                    // Prevent navigation for other buttons (static)
-                    e.preventDefault()
-                    setActiveTab(item.name)
-                  }
+                  e.preventDefault()
+                  setActiveTab(item.name)
                 }}
                 onMouseEnter={() => setHoveredTab(item.name)}
                 onMouseLeave={() => setHoveredTab(null)}

@@ -1,31 +1,30 @@
 'use client'
 
-import { useState } from 'react'
-import { Search, TrendingUp, Music, Users, Lock, Calendar } from 'lucide-react'
-import { StarsBackground } from '@/components/ui/stars'
-import Link from 'next/link'
+import { StarsBackground } from "@/components/ui/stars";
+import { Search, TrendingUp, Music, Users, Flame, Lock, Calendar } from "lucide-react";
+import Image from "next/image";
 
 export default function SearchPage() {
   return (
-    <StarsBackground starColor="#10b981" className="min-h-screen text-white">
+    <StarsBackground className="min-h-screen" starColor="#10b981">
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-5xl font-bold text-white mb-6">Discover</h1>
+          <h1 className="text-5xl font-bold text-white mb-6">Search</h1>
           
           {/* Search Bar */}
           <div className="relative max-w-2xl">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#10b981] w-5 h-5" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 w-5 h-5" />
             <input
               type="text"
               placeholder="Search artists, fans, venues..."
-              className="w-full pl-12 pr-4 py-4 bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#10b981] transition-all"
+              className="w-full pl-12 pr-4 py-4 bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all"
             />
           </div>
 
           {/* Category Filters */}
           <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
-            <button className="px-6 py-2 bg-[#10b981] text-white rounded-full text-sm font-medium whitespace-nowrap">
+            <button className="px-6 py-2 bg-green-500 text-black rounded-full text-sm font-medium whitespace-nowrap">
               All
             </button>
             <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
@@ -85,20 +84,21 @@ export default function SearchPage() {
                 key={index}
                 className="flex flex-col items-center cursor-pointer group transition-transform hover:scale-105"
               >
-                <div className="relative w-full aspect-square mb-3 overflow-hidden rounded-full">
-                  <img
+                <div className="relative w-full aspect-square mb-3">
+                  <Image
                     src={artist.image}
                     alt={artist.name}
-                    className="object-cover w-full h-full"
+                    fill
+                    className="object-cover rounded-full"
                   />
-                  <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-[#10b981] transition-colors" />
+                  <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-green-400 transition-colors" />
                 </div>
                 <h3 className="text-sm font-semibold text-white text-center line-clamp-1">{artist.name}</h3>
               </div>
             ))}
             {/* More artists button */}
             <div className="flex flex-col items-center cursor-pointer group">
-              <div className="relative w-full aspect-square mb-3 bg-gradient-to-br from-[#10b981] to-green-900 rounded-full flex items-center justify-center">
+              <div className="relative w-full aspect-square mb-3 bg-gradient-to-br from-[#01302e] to-green-900 rounded-full flex items-center justify-center">
                 <span className="text-white text-xs font-medium text-center px-4">More artists you might like</span>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function SearchPage() {
         {/* Top Communities Section */}
         <div className="mb-12">
           <div className="flex items-center gap-2 mb-6">
-            <Users className="w-6 h-6 text-[#10b981]" />
+            <Users className="w-6 h-6 text-green-400" />
             <h2 className="text-2xl font-bold text-white">Top Communities</h2>
           </div>
           
@@ -135,7 +135,7 @@ export default function SearchPage() {
                   </div>
                 </div>
                 
-                <button className="px-6 py-2 bg-gray-800 hover:bg-[#10b981] text-white rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
+                <button className="px-6 py-2 bg-gray-800 hover:bg-green-500 text-white rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
                   Unlock
                   <span>🚀</span>
                 </button>
@@ -145,9 +145,9 @@ export default function SearchPage() {
         </div>
 
         {/* Upcoming Events Section */}
-        <div className="mb-12">
+        <div>
           <div className="flex items-center gap-2 mb-6">
-            <Calendar className="w-6 h-6 text-[#10b981]" />
+            <Calendar className="w-6 h-6 text-green-400" />
             <h2 className="text-2xl font-bold text-white">Upcoming Events</h2>
           </div>
           
@@ -176,7 +176,7 @@ export default function SearchPage() {
                   </div>
                 </div>
                 
-                <button className="px-6 py-2 bg-gray-800 hover:bg-[#10b981] text-white rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
+                <button className="px-6 py-2 bg-gray-800 hover:bg-green-500 text-white rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
                   Unlock Access
                   <span>🚀</span>
                 </button>
@@ -186,7 +186,7 @@ export default function SearchPage() {
         </div>
       </div>
     </StarsBackground>
-  )
+  );
 }
 
 const artists = [
@@ -226,7 +226,7 @@ const artists = [
     followers: "950K followers",
     image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=500&q=80",
   },
-]
+];
 
 const communities = [
   {
@@ -247,7 +247,7 @@ const communities = [
     members: "234K",
     gradient: "from-cyan-900/40 to-blue-700/20",
   },
-]
+];
 
 const events = [
   {
@@ -266,4 +266,4 @@ const events = [
     attendees: "8.9K",
     gradient: "from-blue-900/40 to-cyan-700/20",
   },
-]
+];
