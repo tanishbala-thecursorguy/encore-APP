@@ -60,6 +60,8 @@ export default function FriendZonePage() {
   const [showStickerPicker, setShowStickerPicker] = useState<number | null>(null)
   const [selectedSticker, setSelectedSticker] = useState<{postId: number, sticker: string} | null>(null)
   const [likedPosts, setLikedPosts] = useState<number[]>([])
+  const [showCommentsModal, setShowCommentsModal] = useState(false)
+  const [currentPostId, setCurrentPostId] = useState<number | null>(null)
   const router = useRouter()
 
   const toggleLike = (postId: number) => {
@@ -182,8 +184,11 @@ export default function FriendZonePage() {
                     <span className="text-sm">{post.likes}</span>
                   </button>
                   
-                  <button
-                    onClick={() => setActivePost(post.id === activePost ? null : post.id)}
+                  <button 
+                    onClick={() => {
+                      setCurrentPostId(post.id)
+                      setShowCommentsModal(true)
+                    }}
                     className="flex items-center gap-1.5 hover:text-green-400 transition-colors"
                   >
                     <MessageCircle size={22} />
@@ -241,39 +246,66 @@ export default function FriendZonePage() {
                 )}
               </AnimatePresence>
 
-              {/* Comments Section */}
-              <AnimatePresence>
-                {activePost === post.id && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="pt-3 space-y-3"
-                  >
-                    <textarea
-                      placeholder="Write a comment..."
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      className="w-full bg-[#1b2426] border border-gray-700/50 rounded-lg p-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-400 resize-none"
-                      rows={3}
-                    />
-                    <button
-                      onClick={() => {
-                        setComment('')
-                        alert('Comment added!')
-                      }}
-                      className="w-full bg-green-400 hover:bg-green-500 text-black font-semibold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
-                    >
-                      <Send size={16} />
-                      Post Comment
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </motion.div>
         ))}
       </div>
+
+      {/* Comment Modal */}
+      <AnimatePresence>
+        {showCommentsModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 flex items-end justify-center z-[10000]"
+            onClick={() => setShowCommentsModal(false)}
+          >
+            <motion.div
+              initial={{ y: 400 }}
+              animate={{ y: 0 }}
+              exit={{ y: 400 }}
+              transition={{ type: "spring", damping: 30 }}
+              className="bg-[#01302e] w-full max-w-md rounded-t-3xl p-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold text-white">Comments</h2>
+                <button
+                  onClick={() => setShowCommentsModal(false)}
+                  className="text-white/70 hover:text-white transition-colors"
+                >
+                  <span className="text-2xl">&times;</span>
+                </button>
+              </div>
+
+              <div className="h-64 overflow-y-auto text-white/50 text-center py-8 mb-4">
+                No comments yet...
+              </div>
+
+              <div className="flex gap-2">
+                <textarea
+                  placeholder="Add a comment..."
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  className="flex-1 p-3 bg-[#024c46] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 resize-none"
+                  rows={2}
+                />
+                <button 
+                  onClick={() => {
+                    setComment('')
+                    alert('Comment added!')
+                    setShowCommentsModal(false)
+                  }}
+                  className="px-6 py-3 bg-green-400 text-black font-semibold rounded-lg hover:bg-green-500 transition-colors"
+                >
+                  Post
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar {
