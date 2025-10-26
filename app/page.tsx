@@ -92,7 +92,7 @@ export default function HomePage() {
       </div>
       
       {/* Feed */}
-      <div className="flex flex-col items-center px-4 pt-4 pb-32">
+      <div className="flex flex-col pb-32">
         {posts.map((post, i) => (
           <PostCard key={i} {...post} />
         ))}
