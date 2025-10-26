@@ -127,7 +127,7 @@ export function CommunityFeed() {
       {/* Header */}
       <div className="flex items-center mb-6 pt-2">
         <button
-          onClick={() => router.push("/")}
+          onClick={() => router.back()}
           className="mr-4 bg-[#024c46]/70 p-3 rounded-full hover:bg-[#024c46] transition-colors"
         >
           <ArrowLeft size={20} />
