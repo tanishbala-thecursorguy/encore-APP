@@ -44,7 +44,7 @@ export default function HomePage() {
 
       {/* Features Section - Scrolls with content */}
       <div className="bg-black/95 backdrop-blur-sm border-b border-white/10">
-        <div className="flex overflow-x-auto gap-4 px-4 py-3 scrollbar-hide">
+        <div className="flex justify-center overflow-x-auto gap-4 px-4 py-3 scrollbar-hide">
           <Link href="/post" className="flex flex-col items-center gap-1 min-w-[70px]">
             <div className="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-green-400 via-emerald-500 to-teal-500">
               <div className="w-full h-full bg-black rounded-full p-[3px]">
