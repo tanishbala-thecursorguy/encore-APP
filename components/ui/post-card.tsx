@@ -62,7 +62,7 @@ export function PostCard({ username, imageUrl, description, hashtags }: PostProp
             transition={{ type: 'spring', stiffness: 200, damping: 10 }}
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
           >
-            <Heart size={90} className="text-green-400 opacity-80 fill-green-400" />
+            <Heart size={90} className="text-red-500 opacity-90 fill-red-500" />
           </motion.div>
         )}
       </motion.div>
