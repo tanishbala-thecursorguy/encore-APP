@@ -40,6 +40,14 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
+  // Update active tab based on pathname
+  useEffect(() => {
+    const currentItem = items.find(item => item.url === pathname)
+    if (currentItem) {
+      setActiveTab(currentItem.name)
+    }
+  }, [pathname, items])
+
   if (!mounted) return null
 
   return (
