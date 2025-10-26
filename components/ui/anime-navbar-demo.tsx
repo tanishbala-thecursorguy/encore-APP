@@ -12,7 +12,7 @@ const items = [
   },
   {
     name: "Search",
-    url: "#search",
+    url: "/search",
     icon: Search,
   },
   {

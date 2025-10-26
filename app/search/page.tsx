@@ -1,45 +1,59 @@
 'use client'
 
-import { StarsBackground } from "@/components/ui/stars";
-import { Search, TrendingUp, Music, Users, Flame, Lock, Calendar } from "lucide-react";
-import Image from "next/image";
+import { StarsBackground } from "@/components/ui/stars"
+import { Search, TrendingUp, Music, Users, Lock, Calendar, ArrowLeft } from "lucide-react"
+import Image from "next/image"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 export default function SearchPage() {
+  const router = useRouter()
+  const [searchQuery, setSearchQuery] = useState('')
+
   return (
     <StarsBackground className="min-h-screen" starColor="#10b981">
       <div className="relative z-10 container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-5xl font-bold text-white mb-6">Search</h1>
-          
-          {/* Search Bar */}
-          <div className="relative max-w-2xl">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search artists, fans, venues..."
-              className="w-full pl-12 pr-4 py-4 bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all"
-            />
-          </div>
+        {/* Header with Back Button */}
+        <div className="flex items-center gap-4 mb-8">
+          <button
+            onClick={() => router.back()}
+            className="bg-[#024c46]/70 p-3 rounded-full hover:bg-[#024c46] transition-colors"
+          >
+            <ArrowLeft size={20} className="text-white" />
+          </button>
+          <h1 className="text-5xl font-bold text-white">Discover</h1>
+        </div>
+        
+        {/* Search Bar */}
+        <div className="relative max-w-2xl mb-8">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#10b981] w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Search artists, fans, venues..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-12 pr-4 py-4 bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all"
+          />
+        </div>
 
-          {/* Category Filters */}
-          <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
-            <button className="px-6 py-2 bg-green-500 text-black rounded-full text-sm font-medium whitespace-nowrap">
-              All
-            </button>
-            <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
-              Music
-            </button>
-            <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
-              Concerts
-            </button>
-            <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
-              Events
-            </button>
-            <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
-              Communities
-            </button>
-          </div>
+        {/* Category Filters */}
+        <div className="flex gap-3 mb-12 overflow-x-auto pb-2">
+          <button className="px-6 py-2 bg-[#024c46] text-white rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#02665a] transition-colors">
+            All
+          </button>
+          <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
+            Music
+          </button>
+          <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
+            Concerts
+          </button>
+          <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
+            Events
+          </button>
+          <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
+            Communities
+          </button>
         </div>
 
         {/* Trending Now Section */}
@@ -98,7 +112,7 @@ export default function SearchPage() {
             ))}
             {/* More artists button */}
             <div className="flex flex-col items-center cursor-pointer group">
-              <div className="relative w-full aspect-square mb-3 bg-gradient-to-br from-[#01302e] to-green-900 rounded-full flex items-center justify-center">
+              <div className="relative w-full aspect-square mb-3 bg-gradient-to-br from-[#024c46] to-green-900 rounded-full flex items-center justify-center">
                 <span className="text-white text-xs font-medium text-center px-4">More artists you might like</span>
               </div>
             </div>
@@ -135,10 +149,12 @@ export default function SearchPage() {
                   </div>
                 </div>
                 
-                <button className="px-6 py-2 bg-gray-800 hover:bg-green-500 text-white rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
-                  Unlock
-                  <span>🚀</span>
-                </button>
+                <Link href="/community">
+                  <button className="px-6 py-2 bg-gray-800 hover:bg-green-400 text-white hover:text-black rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
+                    View
+                    <span>🚀</span>
+                  </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -176,7 +192,7 @@ export default function SearchPage() {
                   </div>
                 </div>
                 
-                <button className="px-6 py-2 bg-gray-800 hover:bg-green-500 text-white rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
+                <button className="px-6 py-2 bg-gray-800 hover:bg-green-400 text-white hover:text-black rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
                   Unlock Access
                   <span>🚀</span>
                 </button>
@@ -186,7 +202,7 @@ export default function SearchPage() {
         </div>
       </div>
     </StarsBackground>
-  );
+  )
 }
 
 const artists = [
@@ -226,7 +242,7 @@ const artists = [
     followers: "950K followers",
     image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=500&q=80",
   },
-];
+]
 
 const communities = [
   {
@@ -247,7 +263,7 @@ const communities = [
     members: "234K",
     gradient: "from-cyan-900/40 to-blue-700/20",
   },
-];
+]
 
 const events = [
   {
@@ -266,4 +282,4 @@ const events = [
     attendees: "8.9K",
     gradient: "from-blue-900/40 to-cyan-700/20",
   },
-];
+]
