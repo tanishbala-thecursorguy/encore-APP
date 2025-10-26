@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
 import { StarsBackground } from "@/components/ui/stars"
+import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
 
 interface Post {
   id: number
@@ -297,6 +298,13 @@ export function CommunityFeed() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Bottom Navigation Bar with Anime Mascot */}
+      <div className="fixed bottom-0 left-0 right-0 z-[9999] pointer-events-none bg-black pb-3">
+        <div className="flex justify-center pointer-events-auto">
+          <AnimeNavBarDemo />
+        </div>
+      </div>
 
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar {

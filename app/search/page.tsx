@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
 
 export default function SearchPage() {
   const router = useRouter()
@@ -199,6 +200,13 @@ export default function SearchPage() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Bottom Navigation Bar with Anime Mascot */}
+      <div className="fixed bottom-0 left-0 right-0 z-[9999] pointer-events-none bg-black pb-3">
+        <div className="flex justify-center pointer-events-auto">
+          <AnimeNavBarDemo />
         </div>
       </div>
     </StarsBackground>
