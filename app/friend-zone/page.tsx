@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { StarsBackground } from '@/components/ui/stars'
 import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
+import { PostCard } from '@/components/ui/post-card'
 
 // Sample friend list for the top stories bar
 const friends = [
@@ -20,36 +21,29 @@ const friends = [
 // Sample posts
 const posts = [
   {
-    id: 1,
-    user: { name: 'Ava', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop' },
-    type: 'photo',
-    media: [
-      'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&h=400&fit=crop'
-    ],
-    caption: 'Best night ever 🌙✨ #LoFi #Friends',
-    likes: '234',
-    comments: '45'
+    username: 'Ava',
+    imageUrl: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&h=600&fit=crop',
+    description: 'Best night ever 🌙✨',
+    hashtags: ['LoFi', 'Friends'],
+    userType: 'fan' as const,
+    postedTime: '2h',
+    audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
   },
   {
-    id: 2,
-    user: { name: 'Liam', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop' },
-    type: 'video',
-    media: ['https://videos.pexels.com/video-files/856998/856998-hd_1920_1080_25fps.mp4'],
-    caption: 'Chill jam with the crew 🎧🔥',
-    likes: '567',
-    comments: '89'
+    username: 'Liam',
+    imageUrl: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&h=600&fit=crop',
+    description: 'Chill jam with the crew 🎧🔥',
+    hashtags: ['music', 'jam'],
+    userType: 'artist' as const,
+    postedTime: '5h'
   },
   {
-    id: 3,
-    user: { name: 'Noah', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop' },
-    type: 'photo',
-    media: [
-      'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&h=400&fit=crop'
-    ],
-    caption: 'Studio sessions hit different 🎹✨',
-    likes: '412',
-    comments: '67'
+    username: 'Noah',
+    imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&h=600&fit=crop',
+    description: 'Studio sessions hit different 🎹✨',
+    hashtags: ['studio', 'session'],
+    userType: 'fan' as const,
+    postedTime: '1d'
   },
 ]
 
