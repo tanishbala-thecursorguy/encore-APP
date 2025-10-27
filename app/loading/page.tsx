@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ReactLenis } from 'lenis/react'
-import React, { forwardRef, useRef } from 'react'
+import React, { useRef } from 'react'
 
 export default function LoadingPage() {
   const router = useRouter()
@@ -81,7 +81,7 @@ export default function LoadingPage() {
 
   return (
     <ReactLenis root>
-      <main className='bg-black' ref={ref}>
+      <main className='bg-black'>
         <section className='text-white w-full bg-slate-950'>
           <div className='grid grid-cols-12 gap-2'>
             <div className='grid gap-2 col-span-4'>
