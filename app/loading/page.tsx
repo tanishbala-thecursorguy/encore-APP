@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { ReactLenis } from 'lenis/react'
 import React, { forwardRef, useRef } from 'react'
 
-const LoadingPage = forwardRef<HTMLElement>((props, ref) => {
+export default function LoadingPage() {
   const router = useRouter()
   const stickyColumnRef = useRef<HTMLDivElement>(null)
   
@@ -192,9 +192,5 @@ const LoadingPage = forwardRef<HTMLElement>((props, ref) => {
       </main>
     </ReactLenis>
   )
-})
-
-LoadingPage.displayName = 'LoadingPage'
-
-export default LoadingPage
+}
 
