@@ -22,7 +22,7 @@ const items = [
   },
   {
     name: "Profile",
-    url: "#profile",
+    url: "/profile",
     icon: User,
   },
   {
