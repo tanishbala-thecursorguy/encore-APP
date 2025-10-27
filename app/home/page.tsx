@@ -6,11 +6,13 @@ import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
 import { StarsBackground } from "@/components/ui/stars"
 import FloatingActionMenu from "@/components/ui/floating-action-menu"
 import { Home, UserPlus, Plus, Video, Users, Camera, Heart, Share2 } from "lucide-react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { useTheme } from "@/context/ThemeContext"
 
 export default function HomePage() {
+  const router = useRouter()
   let theme = 'black-stars'
   try {
     const context = useTheme()
@@ -170,17 +172,22 @@ export default function HomePage() {
           {
             label: "Create Post",
             Icon: <Camera className="w-4 h-4" />,
-            onClick: () => window.location.href = '/post',
+            onClick: () => router.push('/post'),
           },
           {
-            label: "Add to Favorites",
-            Icon: <Heart className="w-4 h-4" />,
-            onClick: () => console.log('Favorites clicked'),
+            label: "Friend Zone",
+            Icon: <UserPlus className="w-4 h-4" />,
+            onClick: () => router.push('/friend-zone'),
           },
           {
-            label: "Share",
-            Icon: <Share2 className="w-4 h-4" />,
-            onClick: () => console.log('Share clicked'),
+            label: "Reels",
+            Icon: <Video className="w-4 h-4" />,
+            onClick: () => router.push('/reels'),
+          },
+          {
+            label: "Community",
+            Icon: <Users className="w-4 h-4" />,
+            onClick: () => router.push('/community-feed'),
           },
         ]}
       />
