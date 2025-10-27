@@ -1,6 +1,6 @@
-import { CommunityFeed } from "@/components/ui/community/community-feed"
+import { WhopStylePage } from "@/components/ui/community/whop-style-page"
 
 export default function CommunityPage() {
-  return <CommunityFeed />
+  return <WhopStylePage />
 }
 
