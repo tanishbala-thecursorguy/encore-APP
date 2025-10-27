@@ -17,6 +17,21 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true)
+    
+    // Load saved theme on mount
+    const savedTheme = (localStorage.getItem('theme') as Theme) || 'black-stars'
+    setThemeState(savedTheme)
+    
+    if (typeof document !== 'undefined') {
+      document.documentElement.className = savedTheme
+      
+      // Set star color if applicable
+      if (savedTheme === 'white-stars') {
+        document.documentElement.setAttribute('data-star-color', '#3b82f6')
+      } else if (savedTheme === 'black-stars') {
+        document.documentElement.setAttribute('data-star-color', '#10b981')
+      }
+    }
   }, [])
 
   const setTheme = (newTheme: Theme) => {
@@ -38,15 +53,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // Load saved theme on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme || 'black-stars'
-    setThemeState(savedTheme)
-    if (typeof document !== 'undefined') {
-      document.documentElement.className = savedTheme
-    }
-  }, [])
-
   if (!mounted) {
     return <div className="black-stars">{children}</div>
   }
@@ -67,4 +73,3 @@ export function useTheme() {
   }
   return context
 }
-
