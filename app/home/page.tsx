@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { PostCard } from "@/components/ui/post-card"
 import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
 import { StarsBackground } from "@/components/ui/stars"
@@ -11,6 +12,27 @@ import { useTheme } from "@/context/ThemeContext"
 export default function HomePage() {
   const { theme } = useTheme()
   const starColor = theme === 'white-stars' ? '#3b82f6' : '#10b981'
+  
+  // Use state to track theme changes
+  const [currentBg, setCurrentBg] = React.useState('bg-black')
+  
+  React.useEffect(() => {
+    const checkTheme = () => {
+      if (typeof document !== 'undefined') {
+        const htmlClass = document.documentElement.className
+        if (htmlClass === 'white-black' || htmlClass === 'white-stars') {
+          setCurrentBg('bg-white')
+        } else {
+          setCurrentBg('bg-black')
+        }
+      }
+    }
+    
+    checkTheme()
+    window.addEventListener('themechange', checkTheme)
+    
+    return () => window.removeEventListener('themechange', checkTheme)
+  }, [theme])
 
   const posts = [
     {
@@ -50,10 +72,19 @@ export default function HomePage() {
     },
   ]
 
-  const bgClass = theme === 'white-black' || theme === 'white-stars' ? 'bg-white' : 'bg-black'
+  // Get background class from document for instant updates
+  const getBgClass = () => {
+    if (typeof document !== 'undefined') {
+      const htmlClass = document.documentElement.className
+      if (htmlClass === 'white-black' || htmlClass === 'white-stars') {
+        return 'bg-white'
+      }
+    }
+    return 'bg-black'
+  }
 
   return (
-    <StarsBackground starColor={starColor} className={`min-h-screen ${bgClass} relative pb-24`}>
+    <StarsBackground starColor={starColor} className={`min-h-screen ${currentBg} relative pb-24`}>
       {/* Top App Bar */}
       <div className={`sticky top-0 ${theme === 'white-black' || theme === 'white-stars' ? 'bg-white/80' : 'bg-black/80'} backdrop-blur-lg border-b ${theme === 'white-black' || theme === 'white-stars' ? 'border-black/10' : 'border-white/10'} z-50 px-4 py-3`}>
         <h1 className={`text-2xl font-bold ${theme === 'white-black' || theme === 'white-stars' ? 'text-black' : 'text-white'}`}>Encore</h1>
