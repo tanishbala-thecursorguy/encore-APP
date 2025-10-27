@@ -5,6 +5,7 @@ import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
 import { StarsBackground } from "@/components/ui/stars"
 import { Home, UserPlus, Plus, Video, Users } from "lucide-react"
 import Link from "next/link"
+import { motion } from "framer-motion"
 
 export default function HomePage() {
 
