@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Music2, MessageCircle, Share2, Bookmark } from 'lucide-react'
 import Image from 'next/image'
 import WaveformPlayer from './waveform-player'
+import HolographicCard from './holo-card'
 
 interface PostProps {
   username: string
@@ -59,14 +60,21 @@ export function PostCard({ username, imageUrl, description, hashtags, userType =
         </div>
       </div>
 
-      {/* Post Image with Curved Border */}
+      {/* Post Image with Holographic Effect */}
       <motion.div
         onDoubleClick={handleDoubleClick}
         className="relative cursor-pointer bg-black"
         whileTap={{ scale: 0.98 }}
       >
         <div className="px-2 py-2">
-          <div className="rounded-3xl overflow-hidden">
+          <HolographicCard
+            imageUrl={imageUrl}
+            width="100%"
+            height="400px"
+            glowColor="rgba(34, 197, 94, 0.4)"
+            holoColor1="rgba(34, 197, 94, 0.2)"
+            holoColor2="rgba(16, 185, 129, 0.1)"
+          >
             <Image
               src={imageUrl}
               alt={username}
@@ -74,7 +82,7 @@ export function PostCard({ username, imageUrl, description, hashtags, userType =
               height={600}
               className="object-cover w-full h-[400px] select-none"
             />
-          </div>
+          </HolographicCard>
         </div>
 
         {playing && (
