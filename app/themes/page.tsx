@@ -6,6 +6,7 @@ import { ArrowLeft, Check } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { StarsBackground } from '@/components/ui/stars'
 import { AnimeNavBarDemo } from '@/components/ui/anime-navbar-demo'
+import { useTheme } from '@/context/ThemeContext'
 
 const themes = [
   { 
@@ -38,20 +39,10 @@ const themes = [
 
 export default function ThemesPage() {
   const router = useRouter()
-  const [selectedTheme, setSelectedTheme] = useState('black-stars')
+  const { theme, setTheme } = useTheme()
 
   const handleThemeChange = (themeId: string) => {
-    setSelectedTheme(themeId)
-    // Store theme preference
-    localStorage.setItem('theme', themeId)
-    // Apply theme immediately
-    const theme = themes.find(t => t.id === themeId)
-    if (theme) {
-      document.documentElement.className = theme.id
-      if (theme.stars) {
-        document.documentElement.setAttribute('data-star-color', theme.starColor || '#10b981')
-      }
-    }
+    setTheme(themeId as any)
   }
 
   return (
@@ -71,26 +62,26 @@ export default function ThemesPage() {
         {/* Theme Options - Circles */}
         <div className="px-4 py-8">
           <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
-            {themes.map((theme, index) => (
+            {themes.map((themeOption, index) => (
               <motion.div
-                key={theme.id}
+                key={themeOption.id}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
-                onClick={() => handleThemeChange(theme.id)}
+                onClick={() => handleThemeChange(themeOption.id)}
                 className="flex flex-col items-center gap-3 cursor-pointer group"
               >
                 <div className="relative">
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`w-24 h-24 rounded-full ${theme.bg} border-4 ${
-                      selectedTheme === theme.id
+                     className={`w-24 h-24 rounded-full ${themeOption.bg} border-4 ${
+                      theme === themeOption.id
                         ? 'border-green-400 shadow-lg shadow-green-400/50'
                         : 'border-gray-700 group-hover:border-gray-600'
                     } transition-all flex items-center justify-center relative overflow-hidden`}
                   >
-                    {theme.stars && (
+                    {themeOption.stars && (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="relative w-full h-full">
                           <div className="absolute top-2 left-3 w-1 h-1 rounded-full bg-white" />
@@ -104,7 +95,7 @@ export default function ThemesPage() {
                     )}
                   </motion.div>
                   
-                  {selectedTheme === theme.id && (
+                  {theme === themeOption.id && (
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -116,7 +107,7 @@ export default function ThemesPage() {
                 </div>
                 
                 <div className="text-center">
-                  <h3 className="text-sm font-semibold">{theme.name}</h3>
+                  <h3 className="text-sm font-semibold">{themeOption.name}</h3>
                 </div>
               </motion.div>
             ))}
@@ -134,9 +125,9 @@ export default function ThemesPage() {
               <Check size={20} className="text-green-400" />
             </div>
             <div className="flex-1">
-              <p className="text-sm text-gray-300">
-                Active theme: <span className="text-green-400 font-semibold">{themes.find(t => t.id === selectedTheme)?.name}</span>
-              </p>
+                <p className="text-sm text-gray-300">
+                  Active theme: <span className="text-green-400 font-semibold">{themes.find(t => t.id === theme)?.name}</span>
+                </p>
               <p className="text-xs text-gray-500 mt-1">Refresh to see full changes</p>
             </div>
           </div>
