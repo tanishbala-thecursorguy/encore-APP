@@ -17,19 +17,49 @@ export default function WaveformPlayer({
   height = 60,
   className,
 }: WaveformPlayerProps) {
-  const [audio] = React.useState(new Audio(audioSrc))
+  const [audio, setAudio] = React.useState<HTMLAudioElement | null>(null)
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [progress, setProgress] = React.useState(0)
   const [heights, setHeights] = React.useState<number[]>([])
+  const [animHeights, setAnimHeights] = React.useState<number[]>([])
 
   // Generate fixed heights on mount to prevent hydration mismatch
   React.useEffect(() => {
-    setHeights(Array.from({ length: 40 }, () => 10 + Math.random() * 30))
-  }, [])
+    if (typeof window !== 'undefined') {
+      const waveHeights = Array.from({ length: 40 }, () => 10 + Math.random() * 30)
+      setHeights(waveHeights)
+      setAnimHeights(waveHeights)
+      
+      // Create audio instance
+      const audioInstance = new Audio(audioSrc)
+      setAudio(audioInstance)
+    }
+  }, [audioSrc])
+  
+  // Animate bars while playing
+  React.useEffect(() => {
+    if (!isPlaying || !heights.length) return
+    
+    const interval = setInterval(() => {
+      setAnimHeights(prev => prev.map((h, i) => {
+        // Random bounce animation for active bars
+        if (i <= Math.floor((progress / 100) * heights.length)) {
+          return 10 + Math.random() * 40
+        }
+        return h
+      }))
+    }, 100)
+    
+    return () => clearInterval(interval)
+  }, [isPlaying, progress, heights])
 
   React.useEffect(() => {
+    if (!audio) return
+    
     const handleTimeUpdate = () => {
-      setProgress((audio.currentTime / audio.duration) * 100)
+      if (audio.duration) {
+        setProgress((audio.currentTime / audio.duration) * 100)
+      }
     }
 
     const handleEnded = () => {
@@ -47,13 +77,23 @@ export default function WaveformPlayer({
     }
   }, [audio])
 
-  const togglePlay = () => {
-    if (isPlaying) audio.pause()
-    else audio.play()
+  const togglePlay = async () => {
+    if (!audio) return
+    
+    if (isPlaying) {
+      audio.pause()
+    } else {
+      try {
+        await audio.play()
+      } catch (err) {
+        console.error('Play failed:', err)
+      }
+    }
     setIsPlaying(!isPlaying)
   }
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (!audio) return
     const rect = e.currentTarget.getBoundingClientRect()
     const clickX = e.clientX - rect.left
     const seekTime = (clickX / rect.width) * audio.duration
@@ -82,20 +122,26 @@ export default function WaveformPlayer({
       >
         {/* Background wave */}
         <div className="absolute inset-0 flex justify-between items-center px-0.5">
-          {heights.map((waveHeight, idx) => {
+          {heights.map((_, idx) => {
             const barPosition = (idx / heights.length) * 100
             const isActive = barPosition <= progress
+            const animatedHeight = animHeights[idx] || heights[idx]
             
             return (
               <div
                 key={idx}
                 className={cn(
-                  "rounded-sm transition-all duration-150",
-                  isActive && isPlaying ? "bg-green-400 shadow-lg shadow-green-400/50" : "bg-gray-700"
+                  "rounded-sm transition-all",
+                  isActive 
+                    ? isPlaying 
+                      ? "bg-green-400 shadow-lg shadow-green-400/50 animate-pulse" 
+                      : "bg-green-400/60"
+                    : "bg-gray-700"
                 )}
                 style={{
                   width: 2,
-                  height: isActive && isPlaying ? `${waveHeight * 1.3}px` : `${waveHeight}px`,
+                  height: `${animatedHeight}px`,
+                  transition: isActive && isPlaying ? 'height 0.1s ease-in-out' : 'height 0.3s ease-in-out',
                 }}
               />
             )
