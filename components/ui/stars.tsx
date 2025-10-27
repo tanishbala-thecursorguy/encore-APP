@@ -109,11 +109,22 @@ export function StarsBackground({
   const getThemeBg = () => {
     if (typeof window !== 'undefined') {
       const theme = localStorage.getItem('theme') || 'black-stars'
-      if (theme === 'white-black' || theme === 'white-stars') {
+      if (theme === 'white-black') {
+        return 'bg-white'
+      }
+      if (theme === 'white-stars') {
         return 'bg-white'
       }
     }
     return 'bg-black'
+  }
+
+  const shouldShowStars = () => {
+    if (typeof window !== 'undefined') {
+      const theme = localStorage.getItem('theme') || 'black-stars'
+      return theme.includes('stars')
+    }
+    return true
   }
 
   return (
@@ -127,34 +138,36 @@ export function StarsBackground({
       onMouseMove={handleMouseMove}
       {...props}
     >
-      <motion.div style={{ x: springX, y: springY }}>
-        <StarLayer
-          count={1000}
-          size={1}
-          transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
-          starColor={starColor}
-        />
-        <StarLayer
-          count={400}
-          size={2}
-          transition={{
-            repeat: Infinity,
-            duration: speed * 2,
-            ease: "linear",
-          }}
-          starColor={starColor}
-        />
-        <StarLayer
-          count={200}
-          size={3}
-          transition={{
-            repeat: Infinity,
-            duration: speed * 3,
-            ease: "linear",
-          }}
-          starColor={starColor}
-        />
-      </motion.div>
+      {shouldShowStars() && (
+        <motion.div style={{ x: springX, y: springY }}>
+          <StarLayer
+            count={1000}
+            size={1}
+            transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
+            starColor={starColor}
+          />
+          <StarLayer
+            count={400}
+            size={2}
+            transition={{
+              repeat: Infinity,
+              duration: speed * 2,
+              ease: "linear",
+            }}
+            starColor={starColor}
+          />
+          <StarLayer
+            count={200}
+            size={3}
+            transition={{
+              repeat: Infinity,
+              duration: speed * 3,
+              ease: "linear",
+            }}
+            starColor={starColor}
+          />
+        </motion.div>
+      )}
       {children}
     </div>
   );
