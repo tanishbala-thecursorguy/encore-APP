@@ -32,6 +32,7 @@ export default function PostPage() {
   const [hashtags, setHashtags] = useState<string[]>([])
   const [newTag, setNewTag] = useState('')
   const [location, setLocation] = useState('')
+  const [songUrl, setSongUrl] = useState('')
   const [selectedCommunity, setSelectedCommunity] = useState('')
   const [friendZone, setFriendZone] = useState(false)
   const [communityFeed, setCommunityFeed] = useState(false)
@@ -206,6 +207,24 @@ export default function PostPage() {
             onChange={(e) => setLocation(e.target.value)}
             className="w-full bg-[#024c46]/30 border border-[#024c46]/50 rounded-lg p-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-400"
           />
+
+          {/* Song URL */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium flex items-center gap-2">
+              <span className="text-green-400">🎵</span>
+              Add a Song (Link)
+            </label>
+            <input
+              type="url"
+              placeholder="Paste audio URL (e.g., https://soundcloud.com/...)"
+              value={songUrl}
+              onChange={(e) => setSongUrl(e.target.value)}
+              className="w-full bg-[#024c46]/30 border border-[#024c46]/50 rounded-lg p-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+            <p className="text-xs text-gray-500">
+              Add a link to a song that will play when someone clicks the music button on your post
+            </p>
+          </div>
 
           {/* Toggles */}
           <div className="grid grid-cols-2 gap-4 pt-2">
