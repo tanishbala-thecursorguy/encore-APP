@@ -17,6 +17,7 @@ export default function HomePage() {
       hashtags: ["music", "encore", "vibes"],
       userType: "artist" as const,
       postedTime: "2h",
+      audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     },
     {
       username: "dj_wave",
@@ -25,6 +26,7 @@ export default function HomePage() {
       hashtags: ["dj", "party", "live"],
       userType: "fan" as const,
       postedTime: "5h",
+      audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     },
     {
       username: "overflow.std",
@@ -41,6 +43,7 @@ export default function HomePage() {
       hashtags: ["live", "concert", "music"],
       userType: "fan" as const,
       postedTime: "3h",
+      audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     },
   ]
 

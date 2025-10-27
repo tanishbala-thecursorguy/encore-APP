@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Music2, MessageCircle, Share2, Bookmark } from 'lucide-react'
 import Image from 'next/image'
+import WaveformPlayer from './waveform-player'
 
 interface PostProps {
   username: string
@@ -12,9 +13,10 @@ interface PostProps {
   hashtags: string[]
   userType?: 'artist' | 'fan'
   postedTime?: string
+  audioSrc?: string
 }
 
-export function PostCard({ username, imageUrl, description, hashtags, userType = 'artist', postedTime = '2h' }: PostProps) {
+export function PostCard({ username, imageUrl, description, hashtags, userType = 'artist', postedTime = '2h', audioSrc }: PostProps) {
   const [playing, setPlaying] = useState(false)
   const [showComments, setShowComments] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -86,6 +88,13 @@ export function PostCard({ username, imageUrl, description, hashtags, userType =
           </motion.div>
         )}
       </motion.div>
+
+      {/* Waveform Player */}
+      {audioSrc && (
+        <div className="px-4 py-2">
+          <WaveformPlayer audioSrc={audioSrc} />
+        </div>
+      )}
 
       {/* Interaction Buttons */}
       <div className="flex items-center gap-4 px-4 py-3">
