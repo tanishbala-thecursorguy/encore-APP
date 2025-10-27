@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Check, Sun, Moon, Sparkles } from 'lucide-react'
+import { ArrowLeft, Check } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { StarsBackground } from '@/components/ui/stars'
 import { AnimeNavBarDemo } from '@/components/ui/anime-navbar-demo'
@@ -11,29 +11,48 @@ const themes = [
   { 
     id: 'white-black', 
     name: 'White and Black', 
-    desc: 'Classic light theme',
-    bg: 'bg-white',
-    preview: <Sun size={32} className="text-yellow-500" />
+    bg: 'bg-gradient-to-br from-white to-gray-100',
+    stars: false
   },
   { 
     id: 'white-stars', 
     name: 'White and Stars', 
-    desc: 'Light theme with stars',
-    bg: 'bg-gradient-to-br from-white to-gray-100',
-    preview: <Sparkles size={32} className="text-blue-500" />
+    bg: 'bg-gradient-to-br from-white via-blue-50 to-purple-50',
+    stars: true,
+    starColor: '#3b82f6'
   },
   { 
     id: 'black-stars', 
     name: 'Black and Stars', 
-    desc: 'Dark theme with stars',
     bg: 'bg-black',
-    preview: <StarsBackground starColor="#10b981" className="w-16 h-16" />
+    stars: true,
+    starColor: '#10b981'
+  },
+  { 
+    id: 'dark-blue', 
+    name: 'Dark Blue', 
+    bg: 'bg-gradient-to-br from-slate-900 to-blue-900',
+    stars: false
   },
 ]
 
 export default function ThemesPage() {
   const router = useRouter()
   const [selectedTheme, setSelectedTheme] = useState('black-stars')
+
+  const handleThemeChange = (themeId: string) => {
+    setSelectedTheme(themeId)
+    // Store theme preference
+    localStorage.setItem('theme', themeId)
+    // Apply theme immediately
+    const theme = themes.find(t => t.id === themeId)
+    if (theme) {
+      document.documentElement.className = theme.id
+      if (theme.stars) {
+        document.documentElement.setAttribute('data-star-color', theme.starColor || '#10b981')
+      }
+    }
+  }
 
   return (
     <StarsBackground className="min-h-screen" starColor="#10b981">
@@ -49,55 +68,84 @@ export default function ThemesPage() {
           <h1 className="text-xl font-bold">Themes</h1>
         </div>
 
-        {/* Theme Options */}
-        <div className="px-4 py-6 space-y-4">
-          {themes.map((theme, index) => (
-            <motion.div
-              key={theme.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              onClick={() => setSelectedTheme(theme.id)}
-              className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                selectedTheme === theme.id
-                  ? 'border-green-400 bg-green-400/10'
-                  : 'border-gray-800 bg-gray-900/50 hover:bg-gray-800'
-              }`}
-            >
-              <div className="flex items-center gap-4">
-                <div className={`w-16 h-16 rounded-lg ${theme.bg} flex items-center justify-center`}>
-                  {theme.id !== 'black-stars' && theme.preview}
-                  {theme.id === 'black-stars' && (
-                    <div className="relative w-full h-full">
-                      <Sparkles className="absolute top-2 left-2 text-green-400" size={16} />
-                      <Sparkles className="absolute top-4 right-3 text-green-400" size={12} />
-                      <Sparkles className="absolute bottom-3 left-3 text-green-400" size={14} />
-                    </div>
+        {/* Theme Options - Circles */}
+        <div className="px-4 py-8">
+          <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
+            {themes.map((theme, index) => (
+              <motion.div
+                key={theme.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1 }}
+                onClick={() => handleThemeChange(theme.id)}
+                className="flex flex-col items-center gap-3 cursor-pointer group"
+              >
+                <div className="relative">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`w-24 h-24 rounded-full ${theme.bg} border-4 ${
+                      selectedTheme === theme.id
+                        ? 'border-green-400 shadow-lg shadow-green-400/50'
+                        : 'border-gray-700 group-hover:border-gray-600'
+                    } transition-all flex items-center justify-center relative overflow-hidden`}
+                  >
+                    {theme.stars && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative w-full h-full">
+                          <div className="absolute top-2 left-3 w-1 h-1 rounded-full bg-white" />
+                          <div className="absolute top-4 right-4 w-1 h-1 rounded-full bg-white" />
+                          <div className="absolute bottom-5 left-5 w-0.5 h-0.5 rounded-full bg-white" />
+                          <div className="absolute bottom-3 right-2 w-1 h-1 rounded-full bg-white" />
+                          <div className="absolute top-1/2 right-1/4 w-0.5 h-0.5 rounded-full bg-white" />
+                          <div className="absolute bottom-1/4 left-2 w-1 h-1 rounded-full bg-white" />
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                  
+                  {selectedTheme === theme.id && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-green-400 flex items-center justify-center shadow-lg"
+                    >
+                      <Check size={16} className="text-black font-bold" />
+                    </motion.div>
                   )}
                 </div>
                 
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-lg font-semibold">{theme.name}</h3>
-                      <p className="text-sm text-gray-400">{theme.desc}</p>
-                    </div>
-                    {selectedTheme === theme.id && (
-                      <div className="w-6 h-6 rounded-full bg-green-400 flex items-center justify-center">
-                        <Check size={16} className="text-black" />
-                      </div>
-                    )}
-                  </div>
+                <div className="text-center">
+                  <h3 className="text-sm font-semibold">{theme.name}</h3>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
 
-        {/* Info */}
-        <div className="px-4 py-4 bg-green-400/10 border border-green-400/30 rounded-xl mx-4">
-          <p className="text-sm text-gray-300">
-            🌙 Selected theme: <span className="text-green-400 font-semibold">{themes.find(t => t.id === selectedTheme)?.name}</span>
+        {/* Active Theme Info */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="px-6 py-4 mx-4 bg-green-400/10 border border-green-400/30 rounded-2xl"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-green-400/20 flex items-center justify-center">
+              <Check size={20} className="text-green-400" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-gray-300">
+                Active theme: <span className="text-green-400 font-semibold">{themes.find(t => t.id === selectedTheme)?.name}</span>
+              </p>
+              <p className="text-xs text-gray-500 mt-1">Refresh to see full changes</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Add More Themes Hint */}
+        <div className="px-4 py-6">
+          <p className="text-center text-sm text-gray-500">
+            More themes coming soon! 🎨
           </p>
         </div>
       </div>
@@ -111,4 +159,3 @@ export default function ThemesPage() {
     </StarsBackground>
   )
 }
-
