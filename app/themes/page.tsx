@@ -39,8 +39,8 @@ const themes = [
 
 export default function ThemesPage() {
   const router = useRouter()
-  let theme = 'black-stars'
-  let setTheme = (newTheme: string) => {
+  let theme: string = 'black-stars'
+  let setThemeFunction: (newTheme: string) => void = (newTheme: string) => {
     localStorage.setItem('theme', newTheme)
     if (typeof document !== 'undefined') {
       document.documentElement.className = newTheme
@@ -50,14 +50,14 @@ export default function ThemesPage() {
   try {
     const context = useTheme()
     theme = context.theme
-    setTheme = context.setTheme
+    setThemeFunction = context.setTheme as any
   } catch (e) {
     // Not wrapped in ThemeProvider, use defaults
     console.log('Themes page not wrapped in provider')
   }
 
   const handleThemeChange = (themeId: string) => {
-    setTheme(themeId)
+    setThemeFunction(themeId)
   }
 
   return (
