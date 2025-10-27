@@ -20,6 +20,12 @@ export default function WaveformPlayer({
   const [audio] = React.useState(() => typeof Audio !== 'undefined' ? new Audio(audioSrc) : null)
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [progress, setProgress] = React.useState(0)
+  const [heights, setHeights] = React.useState<number[]>([])
+
+  // Generate fixed heights on mount to prevent hydration mismatch
+  React.useEffect(() => {
+    setHeights(Array.from({ length: 50 }, () => 10 + Math.random() * 30))
+  }, [])
 
   React.useEffect(() => {
     if (!audio) return
@@ -81,13 +87,13 @@ export default function WaveformPlayer({
       >
         {/* Background wave */}
         <div className="absolute inset-0 flex justify-between items-center px-0.5">
-          {Array.from({ length: 50 }).map((_, idx) => (
+          {heights.map((waveHeight, idx) => (
             <div
               key={idx}
               className="rounded-sm bg-gray-700"
               style={{
                 width: 2,
-                height: `${10 + Math.random() * (height - 20)}px`,
+                height: `${waveHeight}px`,
               }}
             />
           ))}
