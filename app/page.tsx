@@ -50,51 +50,51 @@ export default function HomePage() {
         <h1 className="text-2xl font-bold">Encore</h1>
       </div>
 
-      {/* Features Section - Scrolls with content */}
+      {/* Features Section - Music themed */}
       <div className="bg-black/95 backdrop-blur-sm border-b border-white/10">
-        <div className="flex justify-center overflow-x-auto gap-4 px-4 py-3 scrollbar-hide">
-          <Link href="/post" className="flex flex-col items-center gap-1 min-w-[70px]">
-            <div className="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-green-400 via-emerald-500 to-teal-500">
-              <div className="w-full h-full bg-black rounded-full p-[3px]">
-                <div className="w-full h-full rounded-full bg-[#024c46] flex items-center justify-center">
-                  <Plus size={24} className="text-white" />
-                </div>
-              </div>
-            </div>
-            <span className="text-xs text-gray-300">Create Post</span>
+        <div className="flex justify-center overflow-x-auto gap-6 px-4 py-4 scrollbar-hide">
+          <Link href="/post" className="flex flex-col items-center gap-2 min-w-[60px] group">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-green-500/30"
+            >
+              <Plus size={26} className="text-black font-bold" />
+            </motion.div>
+            <span className="text-xs text-gray-300 font-medium">Create</span>
           </Link>
           
-          <Link href="/friend-zone" className="flex flex-col items-center gap-1 min-w-[70px]">
-            <div className="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-green-400 via-emerald-500 to-teal-500">
-              <div className="w-full h-full bg-black rounded-full p-[3px]">
-                <div className="w-full h-full rounded-full bg-[#024c46] flex items-center justify-center">
-                  <UserPlus size={24} className="text-white" />
-                </div>
-              </div>
-            </div>
-            <span className="text-xs text-gray-300">Friend Zone</span>
+          <Link href="/friend-zone" className="flex flex-col items-center gap-2 min-w-[60px] group">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/30"
+            >
+              <UserPlus size={26} className="text-white font-bold" />
+            </motion.div>
+            <span className="text-xs text-gray-300 font-medium">Friends</span>
           </Link>
           
-          <Link href="/reels" className="flex flex-col items-center gap-1 min-w-[70px]">
-            <div className="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-green-400 via-emerald-500 to-teal-500">
-              <div className="w-full h-full bg-black rounded-full p-[3px]">
-                <div className="w-full h-full rounded-full bg-[#024c46] flex items-center justify-center">
-                  <Video size={24} className="text-white" />
-                </div>
-              </div>
-            </div>
-            <span className="text-xs text-gray-300">Reels</span>
+          <Link href="/reels" className="flex flex-col items-center gap-2 min-w-[60px] group">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/30"
+            >
+              <Video size={26} className="text-white font-bold" />
+            </motion.div>
+            <span className="text-xs text-gray-300 font-medium">Reels</span>
           </Link>
           
-          <Link href="/community" className="flex flex-col items-center gap-1 min-w-[70px]">
-            <div className="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-green-400 via-emerald-500 to-teal-500">
-              <div className="w-full h-full bg-black rounded-full p-[3px]">
-                <div className="w-full h-full rounded-full bg-[#024c46] flex items-center justify-center">
-                  <Users size={24} className="text-white" />
-                </div>
-              </div>
-            </div>
-            <span className="text-xs text-gray-300">Community</span>
+          <Link href="/community" className="flex flex-col items-center gap-2 min-w-[60px] group">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/30"
+            >
+              <Users size={26} className="text-white font-bold" />
+            </motion.div>
+            <span className="text-xs text-gray-300 font-medium">Community</span>
           </Link>
         </div>
       </div>
