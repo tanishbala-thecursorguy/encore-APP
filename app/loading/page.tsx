@@ -64,8 +64,9 @@ const LoadingPage = forwardRef<HTMLElement>((props, ref) => {
       
       // Redirect to home after animation completes
       setTimeout(() => {
-        router.push('/')
-      }, 3000)
+        sessionStorage.setItem('hasSeenLoading', 'true')
+        router.push('/home')
+      }, 3500)
     }
 
     const timer = setTimeout(autoScroll, 500)
