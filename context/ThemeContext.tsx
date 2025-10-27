@@ -17,24 +17,35 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true)
-    const savedTheme = localStorage.getItem('theme') as Theme || 'black-stars'
-    setThemeState(savedTheme)
   }, [])
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme)
     localStorage.setItem('theme', newTheme)
     
-    // Apply theme to document
-    document.documentElement.className = newTheme
-    
-    // Set star color if applicable
-    if (newTheme === 'white-stars') {
-      document.documentElement.setAttribute('data-star-color', '#3b82f6')
-    } else if (newTheme === 'black-stars') {
-      document.documentElement.setAttribute('data-star-color', '#10b981')
+    // Apply theme to html element
+    if (typeof document !== 'undefined') {
+      document.documentElement.className = newTheme
+      
+      // Set star color if applicable
+      if (newTheme === 'white-stars') {
+        document.documentElement.setAttribute('data-star-color', '#3b82f6')
+      } else if (newTheme === 'black-stars') {
+        document.documentElement.setAttribute('data-star-color', '#10b981')
+      } else {
+        document.documentElement.removeAttribute('data-star-color')
+      }
     }
   }
+
+  // Load saved theme on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as Theme || 'black-stars'
+    setThemeState(savedTheme)
+    if (typeof document !== 'undefined') {
+      document.documentElement.className = savedTheme
+    }
+  }, [])
 
   if (!mounted) {
     return <div className="black-stars">{children}</div>
