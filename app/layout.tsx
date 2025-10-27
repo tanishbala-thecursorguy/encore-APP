@@ -2,7 +2,11 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+})
 
 export const metadata: Metadata = {
   title: "Encore - Social Music App",
@@ -15,8 +19,20 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="de">
-      <body className={inter.className}>{children}</body>
+    <html lang="en">
+      <body className={inter.className}>
+        {children}
+        {/* Smooth scroll optimization */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('scrollBehavior' in document.documentElement.style) {
+                document.documentElement.style.scrollBehavior = 'smooth';
+              }
+            `,
+          }}
+        />
+      </body>
     </html>
   )
 }

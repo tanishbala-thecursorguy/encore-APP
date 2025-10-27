@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -72,13 +72,20 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
               <Link
                 key={item.name}
                 href={item.url}
+                prefetch={true}
                 onClick={(e) => {
                   if (item.url === '#search' || item.url === '#profile' || item.url === '#wallet') {
                     e.preventDefault()
                   }
                   setActiveTab(item.name)
                 }}
-                onMouseEnter={() => setHoveredTab(item.name)}
+                onMouseEnter={() => {
+                  setHoveredTab(item.name)
+                  // Prefetch on hover for faster navigation
+                  if (item.url.startsWith('/')) {
+                    router.prefetch(item.url)
+                  }
+                }}
                 onMouseLeave={() => setHoveredTab(null)}
                 className={cn(
                   "relative cursor-pointer text-sm font-semibold px-6 py-3 rounded-full transition-all duration-300",

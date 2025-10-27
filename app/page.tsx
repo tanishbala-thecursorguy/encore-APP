@@ -10,13 +10,19 @@ export default function EntryPage() {
     // Check if user has seen the loading animation before
     const hasSeenLoading = sessionStorage.getItem('hasSeenLoading')
     
-    if (!hasSeenLoading) {
-      // First time - show loading animation
-      router.push('/loading')
-    } else {
-      // Already seen it - go directly to home
-      router.push('/home')
-    }
+    // Prefetch the target route immediately
+    router.prefetch(hasSeenLoading ? '/home' : '/loading')
+    
+    // Small delay to ensure smooth transition
+    const timer = setTimeout(() => {
+      if (!hasSeenLoading) {
+        router.push('/loading')
+      } else {
+        router.push('/home')
+      }
+    }, 10)
+    
+    return () => clearTimeout(timer)
   }, [router])
 
   return null
