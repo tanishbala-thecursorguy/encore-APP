@@ -274,10 +274,12 @@ export default function WhopStylePage() {
       {/* Bottom Navigation Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-[9999] pointer-events-none bg-black pb-3">
         <div className="flex justify-center pointer-events-auto ml-20">
-          {/* This will be the nav bar from AnimeNavBarDemo */}
+          {/* Navigation space */}
         </div>
       </div>
     </div>
   )
 }
+
+// Default export is not needed since we're using dynamic import
 
