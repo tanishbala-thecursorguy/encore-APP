@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Plus, ArrowDown, Gift, ArrowUpLeft, ArrowDownRight, Settings, ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -23,32 +23,47 @@ const recentActivity = [
 export default function WalletPage() {
   const router = useRouter()
   const [balance] = useState('0.00')
+  const [isWhiteTheme, setIsWhiteTheme] = useState(false)
+
+  useEffect(() => {
+    const checkTheme = () => {
+      if (typeof document !== 'undefined') {
+        const htmlClass = document.documentElement.className
+        setIsWhiteTheme(htmlClass === 'white-black' || htmlClass === 'white-stars')
+      }
+    }
+
+    checkTheme()
+    window.addEventListener('themechange', checkTheme)
+    
+    return () => window.removeEventListener('themechange', checkTheme)
+  }, [])
 
   return (
-    <StarsBackground className="min-h-screen" starColor="#10b981">
-      <div className="text-white pb-24">
+    <StarsBackground className="min-h-screen" starColor={isWhiteTheme ? "#3b82f6" : "#10b981"}>
+      <div className={`${isWhiteTheme ? 'text-black' : 'text-white'} pb-24`}>
         {/* Header */}
-        <div className="sticky top-0 bg-black/80 backdrop-blur-lg border-b border-white/10 z-50 px-4 py-3 flex items-center gap-4">
+        <div className={`sticky top-0 ${isWhiteTheme ? 'bg-white/80 border-black/10' : 'bg-black/80 border-white/10'} backdrop-blur-lg border-b z-50 px-4 py-3 flex items-center gap-4`}>
           <button
             onClick={() => router.back()}
-            className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+            className={`p-2 ${isWhiteTheme ? 'hover:bg-gray-200' : 'hover:bg-gray-800'} rounded-full transition-colors`}
           >
             <ArrowLeft size={24} />
           </button>
-          <h1 className="text-2xl font-bold">Wallet</h1>
-          <button className="p-2 hover:bg-gray-800 rounded-full transition-colors ml-auto">
+          <h1 className={`text-2xl font-bold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>Wallet</h1>
+          <button className={`p-2 ${isWhiteTheme ? 'hover:bg-gray-200' : 'hover:bg-gray-800'} rounded-full transition-colors ml-auto`}>
             <Settings size={24} />
           </button>
         </div>
 
         <div className="px-6 pt-6 space-y-6">
           {/* Subtitle */}
-          <p className="text-gray-400 text-sm">Manage your funds and support artists</p>
+          <p className={`${isWhiteTheme ? 'text-gray-600' : 'text-gray-400'} text-sm`}>Manage your funds and support artists</p>
 
           {/* Balance Section */}
           <div className="text-center space-y-4 py-6">
-            <p className="text-gray-400 text-sm">Available Balance</p>
-            <h2 className="text-5xl font-bold text-white">${balance}</h2>
+            <p className={`${isWhiteTheme ? 'text-gray-600' : 'text-gray-400'} text-sm`}>Available Balance</p>
+            <h2 className={`text-5xl font-bold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>${balance}</h2>
             
             <div className="flex gap-3 mt-6">
               <motion.button
@@ -73,8 +88,8 @@ export default function WalletPage() {
           {/* Bonus Tiers */}
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-4">
-              <Gift size={20} className="text-green-400" />
-              <h3 className="text-lg font-semibold">Bonus Tiers</h3>
+              <Gift size={20} className={isWhiteTheme ? "text-blue-400" : "text-green-400"} />
+              <h3 className={`text-lg font-semibold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>Bonus Tiers</h3>
             </div>
             
             <div className="grid grid-cols-2 gap-3">
@@ -82,10 +97,10 @@ export default function WalletPage() {
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.02 }}
-                  className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 hover:border-green-400 transition-colors"
+                  className={`${isWhiteTheme ? 'bg-gray-100 border-gray-300 hover:border-blue-400' : 'bg-gray-900/50 border-gray-800 hover:border-green-400'} rounded-xl p-4 transition-colors`}
                 >
-                  <p className="text-xl font-bold text-white">{tier.amount}</p>
-                  <p className="text-sm text-gray-400 mt-1">{tier.bonus}</p>
+                  <p className={`text-xl font-bold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>{tier.amount}</p>
+                  <p className={`text-sm ${isWhiteTheme ? 'text-gray-600' : 'text-gray-400'} mt-1`}>{tier.bonus}</p>
                 </motion.div>
               ))}
             </div>
@@ -93,7 +108,7 @@ export default function WalletPage() {
 
           {/* Recent Activity */}
           <div className="space-y-3">
-            <h3 className="text-lg font-semibold">Recent Activity</h3>
+            <h3 className={`text-lg font-semibold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>Recent Activity</h3>
             
             <div className="space-y-3">
               {recentActivity.map((activity, index) => {
@@ -104,16 +119,16 @@ export default function WalletPage() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex items-center gap-3 bg-gray-900/50 border border-gray-800 rounded-xl p-4 hover:bg-gray-900/70 transition-colors"
+                    className={`flex items-center gap-3 ${isWhiteTheme ? 'bg-gray-100 border-gray-300' : 'bg-gray-900/50 border-gray-800'} rounded-xl p-4 ${isWhiteTheme ? 'hover:bg-gray-200' : 'hover:bg-gray-900/70'} transition-colors`}
                   >
-                    <div className="bg-green-400/20 p-2 rounded-lg">
-                      <Icon size={20} className="text-green-400" />
+                    <div className={`${isWhiteTheme ? 'bg-blue-400/20' : 'bg-green-400/20'} p-2 rounded-lg`}>
+                      <Icon size={20} className={isWhiteTheme ? "text-blue-400" : "text-green-400"} />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-white">{activity.type}</p>
-                      <p className="text-sm text-gray-400">{activity.date}</p>
+                      <p className={`font-medium ${isWhiteTheme ? 'text-black' : 'text-white'}`}>{activity.type}</p>
+                      <p className={`text-sm ${isWhiteTheme ? 'text-gray-600' : 'text-gray-400'}`}>{activity.date}</p>
                     </div>
-                    <p className={`font-bold ${activity.amount.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
+                    <p className={`font-bold ${activity.amount.startsWith('+') ? (isWhiteTheme ? 'text-green-500' : 'text-green-400') : 'text-red-400'}`}>
                       {activity.amount}
                     </p>
                   </motion.div>

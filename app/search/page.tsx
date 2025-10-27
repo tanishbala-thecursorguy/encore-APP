@@ -1,9 +1,9 @@
 'use client'
 
+import { useEffect, useState } from "react"
 import { StarsBackground } from "@/components/ui/stars"
 import { Search, TrendingUp, Music, Users, Lock, Calendar, ArrowLeft } from "lucide-react"
 import Image from "next/image"
-import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
@@ -11,48 +11,63 @@ import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
 export default function SearchPage() {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
+  const [isWhiteTheme, setIsWhiteTheme] = useState(false)
+
+  useEffect(() => {
+    const checkTheme = () => {
+      if (typeof document !== 'undefined') {
+        const htmlClass = document.documentElement.className
+        setIsWhiteTheme(htmlClass === 'white-black' || htmlClass === 'white-stars')
+      }
+    }
+
+    checkTheme()
+    window.addEventListener('themechange', checkTheme)
+    
+    return () => window.removeEventListener('themechange', checkTheme)
+  }, [])
 
   return (
-    <StarsBackground className="min-h-screen" starColor="#10b981">
-      <div className="relative z-10 container mx-auto px-4 py-8">
+    <StarsBackground className="min-h-screen" starColor={isWhiteTheme ? "#3b82f6" : "#10b981"}>
+      <div className={`relative z-10 container mx-auto px-4 py-8 ${isWhiteTheme ? 'bg-white' : ''}`}>
         {/* Header with Back Button */}
         <div className="flex items-center gap-4 mb-8">
           <button
             onClick={() => router.back()}
-            className="bg-[#024c46]/70 p-3 rounded-full hover:bg-[#024c46] transition-colors"
+            className={`${isWhiteTheme ? 'bg-gray-100 hover:bg-gray-200' : 'bg-[#024c46]/70 hover:bg-[#024c46]'} p-3 rounded-full transition-colors`}
           >
-            <ArrowLeft size={20} className="text-white" />
+            <ArrowLeft size={20} className={isWhiteTheme ? "text-black" : "text-white"} />
           </button>
-          <h1 className="text-5xl font-bold text-white">Discover</h1>
+          <h1 className={`text-5xl font-bold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>Discover</h1>
         </div>
         
         {/* Search Bar */}
         <div className="relative max-w-2xl mb-8">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#10b981] w-5 h-5" />
+          <Search className={`absolute left-4 top-1/2 -translate-y-1/2 ${isWhiteTheme ? 'text-[#3b82f6]' : 'text-[#10b981]'} w-5 h-5`} />
           <input
             type="text"
             placeholder="Search artists, fans, venues..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all"
+            className={`w-full pl-12 pr-4 py-4 ${isWhiteTheme ? 'bg-gray-100 border-gray-300 text-black placeholder-gray-500' : 'bg-gray-900/80 border-gray-800 text-white placeholder-gray-400'} backdrop-blur-sm border rounded-2xl focus:outline-none focus:ring-2 ${isWhiteTheme ? 'focus:ring-blue-400' : 'focus:ring-green-400'} transition-all`}
           />
         </div>
 
         {/* Category Filters */}
         <div className="flex gap-3 mb-12 overflow-x-auto pb-2">
-          <button className="px-6 py-2 bg-[#024c46] text-white rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#02665a] transition-colors">
+          <button className={`px-6 py-2 ${isWhiteTheme ? 'bg-[#3b82f6] text-white hover:bg-[#2563eb]' : 'bg-[#024c46] text-white hover:bg-[#02665a]'} rounded-full text-sm font-medium whitespace-nowrap transition-colors`}>
             All
           </button>
-          <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
+          <button className={`px-6 py-2 ${isWhiteTheme ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' : 'bg-gray-900/80 text-gray-300 hover:bg-gray-800'} rounded-full text-sm font-medium whitespace-nowrap transition-colors`}>
             Music
           </button>
-          <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
+          <button className={`px-6 py-2 ${isWhiteTheme ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' : 'bg-gray-900/80 text-gray-300 hover:bg-gray-800'} rounded-full text-sm font-medium whitespace-nowrap transition-colors`}>
             Concerts
           </button>
-          <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
+          <button className={`px-6 py-2 ${isWhiteTheme ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' : 'bg-gray-900/80 text-gray-300 hover:bg-gray-800'} rounded-full text-sm font-medium whitespace-nowrap transition-colors`}>
             Events
           </button>
-          <button className="px-6 py-2 bg-gray-900/80 text-gray-300 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-800 transition-colors">
+          <button className={`px-6 py-2 ${isWhiteTheme ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' : 'bg-gray-900/80 text-gray-300 hover:bg-gray-800'} rounded-full text-sm font-medium whitespace-nowrap transition-colors`}>
             Communities
           </button>
         </div>
@@ -61,7 +76,7 @@ export default function SearchPage() {
         <div className="mb-12">
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="w-6 h-6 text-red-500" />
-            <h2 className="text-2xl font-bold text-white">Trending Now</h2>
+            <h2 className={`text-2xl font-bold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>Trending Now</h2>
           </div>
           
           <div className="flex gap-3 overflow-x-auto pb-2">
@@ -75,12 +90,12 @@ export default function SearchPage() {
             ].map((trend, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 bg-gray-900/60 backdrop-blur-sm px-4 py-3 rounded-xl whitespace-nowrap min-w-fit"
+                className={`flex items-center gap-2 ${isWhiteTheme ? 'bg-gray-100' : 'bg-gray-900/60'} backdrop-blur-sm px-4 py-3 rounded-xl whitespace-nowrap min-w-fit`}
               >
-                <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center">
-                  <span className="text-gray-400 text-sm">#</span>
+                <div className={`w-8 h-8 ${isWhiteTheme ? 'bg-gray-200' : 'bg-gray-800'} rounded-full flex items-center justify-center`}>
+                  <span className={`${isWhiteTheme ? 'text-gray-600' : 'text-gray-400'} text-sm`}>#</span>
                 </div>
-                <span className="text-white font-medium">{trend}</span>
+                <span className={`${isWhiteTheme ? 'text-black' : 'text-white'} font-medium`}>{trend}</span>
               </div>
             ))}
           </div>
@@ -90,7 +105,7 @@ export default function SearchPage() {
         <div className="mb-12">
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="w-6 h-6 text-red-500" />
-            <h2 className="text-2xl font-bold text-white">Trending Artists</h2>
+            <h2 className={`text-2xl font-bold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>Trending Artists</h2>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
@@ -106,15 +121,15 @@ export default function SearchPage() {
                     fill
                     className="object-cover rounded-full"
                   />
-                  <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-green-400 transition-colors" />
+                  <div className={`absolute inset-0 rounded-full border-2 border-transparent ${isWhiteTheme ? 'group-hover:border-blue-400' : 'group-hover:border-green-400'} transition-colors`} />
                 </div>
-                <h3 className="text-sm font-semibold text-white text-center line-clamp-1">{artist.name}</h3>
+                <h3 className={`text-sm font-semibold ${isWhiteTheme ? 'text-black' : 'text-white'} text-center line-clamp-1`}>{artist.name}</h3>
               </div>
             ))}
             {/* More artists button */}
             <div className="flex flex-col items-center cursor-pointer group">
-              <div className="relative w-full aspect-square mb-3 bg-gradient-to-br from-[#024c46] to-green-900 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-medium text-center px-4">More artists you might like</span>
+              <div className={`relative w-full aspect-square mb-3 ${isWhiteTheme ? 'bg-gradient-to-br from-blue-200 to-blue-300' : 'bg-gradient-to-br from-[#024c46] to-green-900'} rounded-full flex items-center justify-center`}>
+                <span className={`${isWhiteTheme ? 'text-black' : 'text-white'} text-xs font-medium text-center px-4`}>More artists you might like</span>
               </div>
             </div>
           </div>
@@ -123,15 +138,15 @@ export default function SearchPage() {
         {/* Top Communities Section */}
         <div className="mb-12">
           <div className="flex items-center gap-2 mb-6">
-            <Users className="w-6 h-6 text-green-400" />
-            <h2 className="text-2xl font-bold text-white">Top Communities</h2>
+            <Users className={`w-6 h-6 ${isWhiteTheme ? 'text-blue-400' : 'text-green-400'}`} />
+            <h2 className={`text-2xl font-bold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>Top Communities</h2>
           </div>
           
           <div className="space-y-4">
             {communities.map((community, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 p-5 bg-gray-900/60 backdrop-blur-sm rounded-2xl hover:bg-gray-900/80 transition-colors cursor-pointer group"
+                className={`flex items-center gap-4 p-5 ${isWhiteTheme ? 'bg-gray-100 hover:bg-gray-200' : 'bg-gray-900/60 hover:bg-gray-900/80'} backdrop-blur-sm rounded-2xl transition-colors cursor-pointer group`}
               >
                 <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
                   <div className={`w-full h-full bg-gradient-to-br ${community.gradient}`}>
@@ -142,16 +157,16 @@ export default function SearchPage() {
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-bold text-white mb-0.5">{community.name}</h3>
-                  <p className="text-sm text-gray-400 mb-1">{community.subtitle}</p>
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
+                  <h3 className={`text-lg font-bold ${isWhiteTheme ? 'text-black' : 'text-white'} mb-0.5`}>{community.name}</h3>
+                  <p className={`text-sm ${isWhiteTheme ? 'text-gray-600' : 'text-gray-400'} mb-1`}>{community.subtitle}</p>
+                  <div className={`flex items-center gap-1 text-xs ${isWhiteTheme ? 'text-gray-600' : 'text-gray-500'}`}>
                     <Users className="w-3 h-3" />
                     <span>{community.members} members</span>
                   </div>
                 </div>
                 
                 <Link href="/community">
-                  <button className="px-6 py-2 bg-gray-800 hover:bg-green-400 text-white hover:text-black rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
+                  <button className={`px-6 py-2 ${isWhiteTheme ? 'bg-blue-400 hover:bg-blue-500' : 'bg-gray-800 hover:bg-green-400'} text-white hover:text-black rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2`}>
                     View
                     <span>🚀</span>
                   </button>
@@ -164,15 +179,15 @@ export default function SearchPage() {
         {/* Upcoming Events Section */}
         <div>
           <div className="flex items-center gap-2 mb-6">
-            <Calendar className="w-6 h-6 text-green-400" />
-            <h2 className="text-2xl font-bold text-white">Upcoming Events</h2>
+            <Calendar className={`w-6 h-6 ${isWhiteTheme ? 'text-blue-400' : 'text-green-400'}`} />
+            <h2 className={`text-2xl font-bold ${isWhiteTheme ? 'text-black' : 'text-white'}`}>Upcoming Events</h2>
           </div>
           
           <div className="space-y-4">
             {events.map((event, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 p-5 bg-gray-900/60 backdrop-blur-sm rounded-2xl hover:bg-gray-900/80 transition-colors cursor-pointer group"
+                className={`flex items-center gap-4 p-5 ${isWhiteTheme ? 'bg-gray-100 hover:bg-gray-200' : 'bg-gray-900/60 hover:bg-gray-900/80'} backdrop-blur-sm rounded-2xl transition-colors cursor-pointer group`}
               >
                 <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
                   <div className={`w-full h-full bg-gradient-to-br ${event.gradient}`}>
@@ -183,9 +198,9 @@ export default function SearchPage() {
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-bold text-white mb-0.5">{event.title}</h3>
-                  <p className="text-sm text-gray-400 mb-1">{event.artist}</p>
-                  <div className="flex items-center gap-3 text-xs text-gray-500">
+                  <h3 className={`text-lg font-bold ${isWhiteTheme ? 'text-black' : 'text-white'} mb-0.5`}>{event.title}</h3>
+                  <p className={`text-sm ${isWhiteTheme ? 'text-gray-600' : 'text-gray-400'} mb-1`}>{event.artist}</p>
+                  <div className={`flex items-center gap-3 text-xs ${isWhiteTheme ? 'text-gray-600' : 'text-gray-500'}`}>
                     <span>{event.date} • {event.time}</span>
                     <span>•</span>
                     <Users className="w-3 h-3 inline" />
@@ -193,7 +208,7 @@ export default function SearchPage() {
                   </div>
                 </div>
                 
-                <button className="px-6 py-2 bg-gray-800 hover:bg-green-400 text-white hover:text-black rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2">
+                <button className={`px-6 py-2 ${isWhiteTheme ? 'bg-blue-400 hover:bg-blue-500' : 'bg-gray-800 hover:bg-green-400'} text-white hover:text-black rounded-full text-sm font-medium transition-colors whitespace-nowrap flex items-center gap-2`}>
                   Unlock Access
                   <span>🚀</span>
                 </button>
