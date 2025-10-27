@@ -100,56 +100,7 @@ export default function HomePage() {
     <StarsBackground starColor={starColor} className={`min-h-screen ${currentBg} relative pb-24`}>
       {/* Top App Bar */}
       <div className={`sticky top-0 ${theme === 'white-black' || theme === 'white-stars' ? 'bg-white/80' : 'bg-black/80'} backdrop-blur-lg border-b ${theme === 'white-black' || theme === 'white-stars' ? 'border-black/10' : 'border-white/10'} z-50 px-4 py-3`}>
-        <h1 className={`text-2xl font-bold ${theme === 'white-black' || theme === 'white-stars' ? 'text-black' : 'text-white'}`}>Encore</h1>
-      </div>
-
-      {/* Features Section - Music themed */}
-      <div className={`${theme === 'white-black' || theme === 'white-stars' ? 'bg-white' : 'bg-black/95'} backdrop-blur-sm border-b ${theme === 'white-black' || theme === 'white-stars' ? 'border-black/10' : 'border-white/10'}`}>
-        <div className="flex justify-center overflow-x-auto gap-4 px-4 py-3 scrollbar-hide">
-          <Link href="/post" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
-            <motion.div
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-11 h-11 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-green-500/30"
-            >
-              <Plus size={22} className="text-black font-bold" />
-            </motion.div>
-            <span className={`text-[11px] ${theme === 'white-black' || theme === 'white-stars' ? 'text-gray-700' : 'text-gray-300'} font-medium`}>Create</span>
-          </Link>
-          
-          <Link href="/friend-zone" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
-            <motion.div
-              whileHover={{ scale: 1.1, rotate: -5 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-11 h-11 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/30"
-            >
-              <UserPlus size={22} className="text-white font-bold" />
-            </motion.div>
-            <span className={`text-[11px] ${theme === 'white-black' || theme === 'white-stars' ? 'text-gray-700' : 'text-gray-300'} font-medium`}>Friends</span>
-          </Link>
-
-          <Link href="/reels" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
-            <motion.div
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-11 h-11 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/30"
-            >
-              <Video size={22} className="text-white font-bold" />
-            </motion.div>
-            <span className={`text-[11px] ${theme === 'white-black' || theme === 'white-stars' ? 'text-gray-700' : 'text-gray-300'} font-medium`}>Reels</span>
-          </Link>
-
-          <Link href="/community-feed" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
-            <motion.div
-              whileHover={{ scale: 1.1, rotate: -5 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-11 h-11 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/30"
-            >
-              <Users size={22} className="text-white font-bold" />
-            </motion.div>
-            <span className={`text-[11px] ${theme === 'white-black' || theme === 'white-stars' ? 'text-gray-700' : 'text-gray-300'} font-medium`}>Community</span>
-          </Link>
-        </div>
+          <h1 className={`text-2xl font-bold ${theme === 'white-black' || theme === 'white-stars' ? 'text-black' : 'text-white'}`}>Encore</h1>
       </div>
       
       {/* Feed */}
