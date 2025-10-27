@@ -10,7 +10,17 @@ import { motion } from "framer-motion"
 import { useTheme } from "@/context/ThemeContext"
 
 export default function HomePage() {
-  const { theme } = useTheme()
+  let theme = 'black-stars'
+  try {
+    const context = useTheme()
+    theme = context.theme
+  } catch (e) {
+    // Fallback
+    if (typeof window !== 'undefined') {
+      theme = localStorage.getItem('theme') || 'black-stars'
+    }
+  }
+  
   const starColor = theme === 'white-stars' ? '#3b82f6' : '#10b981'
   
   // Use state to track theme changes
