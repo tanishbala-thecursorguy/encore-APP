@@ -6,8 +6,11 @@ import { StarsBackground } from "@/components/ui/stars"
 import { Home, UserPlus, Plus, Video, Users } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { useTheme } from "@/context/ThemeContext"
 
 export default function HomePage() {
+  const { theme } = useTheme()
+  const starColor = theme === 'white-stars' ? '#3b82f6' : '#10b981'
 
   const posts = [
     {
@@ -48,7 +51,7 @@ export default function HomePage() {
   ]
 
   return (
-    <StarsBackground starColor="#10b981" className="min-h-screen text-white relative pb-24">
+    <StarsBackground starColor={starColor} className="min-h-screen text-white relative pb-24">
       {/* Top App Bar */}
       <div className="sticky top-0 bg-black/80 backdrop-blur-lg border-b border-white/10 z-50 px-4 py-3">
         <h1 className="text-2xl font-bold">Encore</h1>
