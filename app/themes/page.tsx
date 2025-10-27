@@ -58,8 +58,16 @@ export default function ThemesPage() {
 
   const handleThemeChange = (themeId: string) => {
     setThemeFunction(themeId)
+    
+    // Dispatch custom event to trigger re-renders
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('themechange'))
+    }
+    
     // Force immediate update
-    window.location.href = '/' // Navigate to home to see changes
+    setTimeout(() => {
+      window.location.href = '/' // Navigate to home to see changes
+    }, 100)
   }
 
   return (

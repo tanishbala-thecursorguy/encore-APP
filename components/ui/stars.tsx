@@ -12,6 +12,39 @@ import {
 
 import { cn } from "@/lib/utils";
 
+// Create a custom hook to get theme
+function useThemeFromStorage() {
+  const [theme, setTheme] = React.useState<string>('black-stars')
+
+  React.useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'black-stars'
+    setTheme(savedTheme)
+
+    // Listen for storage changes
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'theme') {
+        setTheme(e.newValue || 'black-stars')
+      }
+    }
+
+    // Listen for custom theme change events
+    const handleThemeChange = () => {
+      const currentTheme = localStorage.getItem('theme') || 'black-stars'
+      setTheme(currentTheme)
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    window.addEventListener('themechange', handleThemeChange)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('themechange', handleThemeChange)
+    }
+  }, [])
+
+  return theme
+}
+
 type StarLayerProps = HTMLMotionProps<"div"> & {
   count: number;
   size: number;
@@ -87,6 +120,7 @@ export function StarsBackground({
   starColor = "#fff",
   ...props
 }: StarsBackgroundProps) {
+  const theme = useThemeFromStorage()
   const offsetX = useMotionValue(1);
   const offsetY = useMotionValue(1);
 
@@ -105,26 +139,16 @@ export function StarsBackground({
     [offsetX, offsetY, factor],
   );
 
-  // Get theme from localStorage for background color
+  // Get theme-based background color
   const getThemeBg = () => {
-    if (typeof window !== 'undefined') {
-      const theme = localStorage.getItem('theme') || 'black-stars'
-      if (theme === 'white-black') {
-        return 'bg-white'
-      }
-      if (theme === 'white-stars') {
-        return 'bg-white'
-      }
+    if (theme === 'white-black' || theme === 'white-stars') {
+      return 'bg-white'
     }
     return 'bg-black'
   }
 
   const shouldShowStars = () => {
-    if (typeof window !== 'undefined') {
-      const theme = localStorage.getItem('theme') || 'black-stars'
-      return theme.includes('stars')
-    }
-    return true
+    return theme.includes('stars')
   }
 
   return (
