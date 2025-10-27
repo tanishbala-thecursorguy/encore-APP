@@ -87,23 +87,33 @@ export default function WaveformPlayer({
       >
         {/* Background wave */}
         <div className="absolute inset-0 flex justify-between items-center px-0.5">
-          {heights.map((waveHeight, idx) => (
-            <div
-              key={idx}
-              className="rounded-sm bg-gray-700"
-              style={{
-                width: 2,
-                height: `${waveHeight}px`,
-              }}
-            />
-          ))}
+          {heights.map((waveHeight, idx) => {
+            // Calculate if this bar should be animated based on progress
+            const barPosition = (idx / heights.length) * 100
+            const isActive = barPosition <= progress
+            
+            return (
+              <div
+                key={idx}
+                className={cn(
+                  "rounded-sm transition-all duration-150",
+                  isActive && isPlaying ? "bg-green-400 shadow-lg shadow-green-400/50" : "bg-gray-700"
+                )}
+                style={{
+                  width: 2,
+                  height: isActive && isPlaying ? `${waveHeight * 1.3}px` : `${waveHeight}px`,
+                }}
+              />
+            )
+          })}
         </div>
 
-        {/* Progress overlay */}
+        {/* Progress overlay gradient */}
         <div
-          className="absolute top-0 left-0 h-full bg-green-400"
+          className="absolute top-0 left-0 h-full opacity-30"
           style={{
             width: `${progress}%`,
+            background: 'linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.3))',
           }}
         />
       </div>
