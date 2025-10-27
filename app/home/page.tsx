@@ -4,7 +4,8 @@ import React from 'react'
 import { PostCard } from "@/components/ui/post-card"
 import { AnimeNavBarDemo } from "@/components/ui/anime-navbar-demo"
 import { StarsBackground } from "@/components/ui/stars"
-import { Home, UserPlus, Plus, Video, Users } from "lucide-react"
+import FloatingActionMenu from "@/components/ui/floating-action-menu"
+import { Home, UserPlus, Plus, Video, Users, Camera, Heart, Share2 } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { useTheme } from "@/context/ThemeContext"
@@ -162,6 +163,27 @@ export default function HomePage() {
           <AnimeNavBarDemo />
         </div>
       </div>
+
+      {/* Floating Action Menu */}
+      <FloatingActionMenu
+        options={[
+          {
+            label: "Create Post",
+            Icon: <Camera className="w-4 h-4" />,
+            onClick: () => window.location.href = '/post',
+          },
+          {
+            label: "Add to Favorites",
+            Icon: <Heart className="w-4 h-4" />,
+            onClick: () => console.log('Favorites clicked'),
+          },
+          {
+            label: "Share",
+            Icon: <Share2 className="w-4 h-4" />,
+            onClick: () => console.log('Share clicked'),
+          },
+        ]}
+      />
 
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar {
