@@ -90,7 +90,7 @@ export default function HomePage() {
             <span className="text-xs text-gray-300 font-medium">Reels</span>
           </Link>
           
-          <Link href="/community" className="flex flex-col items-center gap-2 min-w-[60px] group">
+          <Link href="/community-feed" className="flex flex-col items-center gap-2 min-w-[60px] group">
             <motion.div
               whileHover={{ scale: 1.1, rotate: -5 }}
               whileTap={{ scale: 0.95 }}
