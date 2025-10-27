@@ -56,49 +56,49 @@ export default function HomePage() {
 
       {/* Features Section - Music themed */}
       <div className="bg-black/95 backdrop-blur-sm border-b border-white/10">
-        <div className="flex justify-center overflow-x-auto gap-6 px-4 py-4 scrollbar-hide">
-          <Link href="/post" className="flex flex-col items-center gap-2 min-w-[60px] group">
+        <div className="flex justify-center overflow-x-auto gap-4 px-4 py-3 scrollbar-hide">
+          <Link href="/post" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
-              className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-green-500/30"
+              className="w-11 h-11 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-green-500/30"
             >
-              <Plus size={26} className="text-black font-bold" />
+              <Plus size={22} className="text-black font-bold" />
             </motion.div>
-            <span className="text-xs text-gray-300 font-medium">Create</span>
+            <span className="text-[11px] text-gray-300 font-medium">Create</span>
           </Link>
           
-          <Link href="/friend-zone" className="flex flex-col items-center gap-2 min-w-[60px] group">
+          <Link href="/friend-zone" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
             <motion.div
               whileHover={{ scale: 1.1, rotate: -5 }}
               whileTap={{ scale: 0.95 }}
-              className="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/30"
+              className="w-11 h-11 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/30"
             >
-              <UserPlus size={26} className="text-white font-bold" />
+              <UserPlus size={22} className="text-white font-bold" />
             </motion.div>
-            <span className="text-xs text-gray-300 font-medium">Friends</span>
+            <span className="text-[11px] text-gray-300 font-medium">Friends</span>
           </Link>
-          
-          <Link href="/reels" className="flex flex-col items-center gap-2 min-w-[60px] group">
+
+          <Link href="/reels" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
-              className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/30"
+              className="w-11 h-11 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/30"
             >
-              <Video size={26} className="text-white font-bold" />
+              <Video size={22} className="text-white font-bold" />
             </motion.div>
-            <span className="text-xs text-gray-300 font-medium">Reels</span>
+            <span className="text-[11px] text-gray-300 font-medium">Reels</span>
           </Link>
-          
-          <Link href="/community-feed" className="flex flex-col items-center gap-2 min-w-[60px] group">
+
+          <Link href="/community-feed" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
             <motion.div
               whileHover={{ scale: 1.1, rotate: -5 }}
               whileTap={{ scale: 0.95 }}
-              className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/30"
+              className="w-11 h-11 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/30"
             >
-              <Users size={26} className="text-white font-bold" />
+              <Users size={22} className="text-white font-bold" />
             </motion.div>
-            <span className="text-xs text-gray-300 font-medium">Community</span>
+            <span className="text-[11px] text-gray-300 font-medium">Community</span>
           </Link>
         </div>
       </div>
