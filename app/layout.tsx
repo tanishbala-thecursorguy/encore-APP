@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { ClientThemeProvider } from "@/components/ClientThemeProvider"
+import { Providers } from "./providers"
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -22,9 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ClientThemeProvider>
+        <Providers>
           {children}
-        </ClientThemeProvider>
+        </Providers>
         {/* Smooth scroll optimization */}
         <script
           dangerouslySetInnerHTML={{
