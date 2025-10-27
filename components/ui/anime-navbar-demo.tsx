@@ -27,7 +27,7 @@ const items = [
   },
   {
     name: "Wallet",
-    url: "#wallet",
+    url: "/wallet",
     icon: Wallet,
   },
 ]
