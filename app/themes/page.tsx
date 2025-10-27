@@ -39,7 +39,17 @@ const themes = [
 
 export default function ThemesPage() {
   const router = useRouter()
-  const { theme, setTheme } = useTheme()
+  let theme = 'black-stars'
+  let setTheme = () => {}
+  
+  try {
+    const context = useTheme()
+    theme = context.theme
+    setTheme = context.setTheme
+  } catch (e) {
+    // Not wrapped in ThemeProvider, use defaults
+    console.log('Themes page not wrapped in provider')
+  }
 
   const handleThemeChange = (themeId: string) => {
     setTheme(themeId as any)
