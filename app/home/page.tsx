@@ -50,15 +50,17 @@ export default function HomePage() {
     },
   ]
 
+  const bgClass = theme === 'white-black' || theme === 'white-stars' ? 'bg-white' : 'bg-black'
+
   return (
-    <StarsBackground starColor={starColor} className="min-h-screen text-white relative pb-24">
+    <StarsBackground starColor={starColor} className={`min-h-screen ${bgClass} relative pb-24`}>
       {/* Top App Bar */}
-      <div className="sticky top-0 bg-black/80 backdrop-blur-lg border-b border-white/10 z-50 px-4 py-3">
-        <h1 className="text-2xl font-bold">Encore</h1>
+      <div className={`sticky top-0 ${theme === 'white-black' || theme === 'white-stars' ? 'bg-white/80' : 'bg-black/80'} backdrop-blur-lg border-b ${theme === 'white-black' || theme === 'white-stars' ? 'border-black/10' : 'border-white/10'} z-50 px-4 py-3`}>
+        <h1 className={`text-2xl font-bold ${theme === 'white-black' || theme === 'white-stars' ? 'text-black' : 'text-white'}`}>Encore</h1>
       </div>
 
       {/* Features Section - Music themed */}
-      <div className="bg-black/95 backdrop-blur-sm border-b border-white/10">
+      <div className={`${theme === 'white-black' || theme === 'white-stars' ? 'bg-white' : 'bg-black/95'} backdrop-blur-sm border-b ${theme === 'white-black' || theme === 'white-stars' ? 'border-black/10' : 'border-white/10'}`}>
         <div className="flex justify-center overflow-x-auto gap-4 px-4 py-3 scrollbar-hide">
           <Link href="/post" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
             <motion.div
@@ -68,7 +70,7 @@ export default function HomePage() {
             >
               <Plus size={22} className="text-black font-bold" />
             </motion.div>
-            <span className="text-[11px] text-gray-300 font-medium">Create</span>
+            <span className={`text-[11px] ${theme === 'white-black' || theme === 'white-stars' ? 'text-gray-700' : 'text-gray-300'} font-medium`}>Create</span>
           </Link>
           
           <Link href="/friend-zone" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
@@ -79,7 +81,7 @@ export default function HomePage() {
             >
               <UserPlus size={22} className="text-white font-bold" />
             </motion.div>
-            <span className="text-[11px] text-gray-300 font-medium">Friends</span>
+            <span className={`text-[11px] ${theme === 'white-black' || theme === 'white-stars' ? 'text-gray-700' : 'text-gray-300'} font-medium`}>Friends</span>
           </Link>
 
           <Link href="/reels" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
@@ -90,7 +92,7 @@ export default function HomePage() {
             >
               <Video size={22} className="text-white font-bold" />
             </motion.div>
-            <span className="text-[11px] text-gray-300 font-medium">Reels</span>
+            <span className={`text-[11px] ${theme === 'white-black' || theme === 'white-stars' ? 'text-gray-700' : 'text-gray-300'} font-medium`}>Reels</span>
           </Link>
 
           <Link href="/community-feed" className="flex flex-col items-center gap-1.5 min-w-[55px] group">
@@ -101,7 +103,7 @@ export default function HomePage() {
             >
               <Users size={22} className="text-white font-bold" />
             </motion.div>
-            <span className="text-[11px] text-gray-300 font-medium">Community</span>
+            <span className={`text-[11px] ${theme === 'white-black' || theme === 'white-stars' ? 'text-gray-700' : 'text-gray-300'} font-medium`}>Community</span>
           </Link>
         </div>
       </div>
