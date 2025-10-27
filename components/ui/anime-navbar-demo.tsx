@@ -27,7 +27,7 @@ const items = [
   },
   {
     name: "More",
-    url: "#more",
+    url: "/wallet",
     icon: Menu,
   },
 ]

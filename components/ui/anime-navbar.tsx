@@ -75,7 +75,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                 href={item.url}
                 prefetch={true}
                 onClick={(e) => {
-                  if (item.url === '#search' || item.url === '#profile' || item.url === '#wallet' || item.url === '#more') {
+                  if (item.url === '#search' || item.url === '#profile' || item.url === '#wallet') {
                     e.preventDefault()
                   }
                   setActiveTab(item.name)
