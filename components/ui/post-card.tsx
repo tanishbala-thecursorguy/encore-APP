@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Music2, MessageCircle, Share2, Bookmark } from 'lucide-react'
 import Image from 'next/image'
@@ -21,6 +21,21 @@ export function PostCard({ username, imageUrl, description, hashtags, userType =
   const [playing, setPlaying] = useState(false)
   const [showComments, setShowComments] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [isWhiteTheme, setIsWhiteTheme] = useState(false)
+
+  useEffect(() => {
+    const checkTheme = () => {
+      if (typeof document !== 'undefined') {
+        const htmlClass = document.documentElement.className
+        setIsWhiteTheme(htmlClass === 'white-black' || htmlClass === 'white-stars')
+      }
+    }
+
+    checkTheme()
+    window.addEventListener('themechange', checkTheme)
+    
+    return () => window.removeEventListener('themechange', checkTheme)
+  }, [])
 
   const handleDoubleClick = () => {
     setPlaying(true)
@@ -35,9 +50,9 @@ export function PostCard({ username, imageUrl, description, hashtags, userType =
   }
 
   return (
-    <div className="w-full bg-black text-white border-b border-white/10">
+    <div className={`w-full ${isWhiteTheme ? 'bg-white text-black' : 'bg-black text-white'} border-b ${isWhiteTheme ? 'border-black/10' : 'border-white/10'}`}>
       {/* Top Section - Profile, Type, Time */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-white/5">
+      <div className={`flex items-center gap-3 px-4 py-3 border-b ${isWhiteTheme ? 'border-black/5' : 'border-white/5'}`}>
         <div className="size-12 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex-shrink-0" />
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-0.5">
@@ -45,14 +60,14 @@ export function PostCard({ username, imageUrl, description, hashtags, userType =
             <span className="text-xs px-2 py-0.5 bg-[#01302e] rounded-full text-green-400 font-medium capitalize">
               {userType}
             </span>
-            <span className="text-xs text-gray-500">{postedTime}</span>
+            <span className={`text-xs ${isWhiteTheme ? 'text-gray-600' : 'text-gray-500'}`}>{postedTime}</span>
           </div>
         </div>
       </div>
 
       {/* Description and Hashtags */}
       <div className="px-4 py-3 space-y-2">
-        <p className="text-sm text-gray-100">{description}</p>
+        <p className={`text-sm ${isWhiteTheme ? 'text-gray-900' : 'text-gray-100'}`}>{description}</p>
         <div className="flex flex-wrap gap-1.5">
           {hashtags.map((tag) => (
             <span key={tag} className="text-xs text-green-400">#{tag}</span>
@@ -63,7 +78,7 @@ export function PostCard({ username, imageUrl, description, hashtags, userType =
       {/* Post Image with Holographic Effect */}
       <motion.div
         onDoubleClick={handleDoubleClick}
-        className="relative cursor-pointer bg-black"
+        className={`relative cursor-pointer ${isWhiteTheme ? 'bg-white' : 'bg-black'}`}
         whileTap={{ scale: 0.98 }}
       >
         <div className="px-2 py-2">
@@ -110,20 +125,20 @@ export function PostCard({ username, imageUrl, description, hashtags, userType =
           <Music2
             size={28}
             className={`transition-all ${
-              playing ? 'text-green-400' : 'text-white'
+              playing ? 'text-green-400' : isWhiteTheme ? 'text-black' : 'text-white'
             }`}
           />
-          <span className="text-sm">49.3K</span>
+          <span className={`text-sm ${isWhiteTheme ? 'text-black' : 'text-white'}`}>49.3K</span>
         </button>
 
         <button onClick={() => setShowComments(true)} className="flex items-center gap-2">
-          <MessageCircle size={28} className="text-white transition-colors" />
-          <span className="text-sm">234</span>
+          <MessageCircle size={28} className={`${isWhiteTheme ? 'text-black' : 'text-white'} transition-colors`} />
+          <span className={`text-sm ${isWhiteTheme ? 'text-black' : 'text-white'}`}>234</span>
         </button>
 
         <button onClick={handleShare} className="flex items-center gap-2">
-          <Share2 size={28} className="text-white transition-colors" />
-          <span className="text-sm">Share</span>
+          <Share2 size={28} className={`${isWhiteTheme ? 'text-black' : 'text-white'} transition-colors`} />
+          <span className={`text-sm ${isWhiteTheme ? 'text-black' : 'text-white'}`}>Share</span>
         </button>
 
         <button 
@@ -133,7 +148,7 @@ export function PostCard({ username, imageUrl, description, hashtags, userType =
           <Bookmark
             size={28}
             className={`transition-all ${
-              saved ? 'fill-white text-white' : 'text-white'
+              saved ? (isWhiteTheme ? 'fill-black text-black' : 'fill-white text-white') : (isWhiteTheme ? 'text-black' : 'text-white')
             }`}
           />
         </button>
