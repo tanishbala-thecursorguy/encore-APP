@@ -40,7 +40,12 @@ const themes = [
 export default function ThemesPage() {
   const router = useRouter()
   let theme = 'black-stars'
-  let setTheme = () => {}
+  let setTheme = (newTheme: string) => {
+    localStorage.setItem('theme', newTheme)
+    if (typeof document !== 'undefined') {
+      document.documentElement.className = newTheme
+    }
+  }
   
   try {
     const context = useTheme()
@@ -52,7 +57,7 @@ export default function ThemesPage() {
   }
 
   const handleThemeChange = (themeId: string) => {
-    setTheme(themeId as any)
+    setTheme(themeId)
   }
 
   return (
