@@ -14,24 +14,32 @@ export default function HomePage() {
       imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&h=600&fit=crop",
       description: "Vibe check 🎶✨",
       hashtags: ["music", "encore", "vibes"],
+      userType: "artist" as const,
+      postedTime: "2h",
     },
     {
       username: "dj_wave",
       imageUrl: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?w=600&h=600&fit=crop",
       description: "Night at the decks 🔥",
       hashtags: ["dj", "party", "live"],
+      userType: "fan" as const,
+      postedTime: "5h",
     },
     {
       username: "overflow.std",
       imageUrl: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&h=600&fit=crop",
       description: "Lorem ipsum dolor sit amet",
       hashtags: ["music", "studio", "production"],
+      userType: "artist" as const,
+      postedTime: "1d",
     },
     {
       username: "the_vortex",
       imageUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=600&fit=crop",
       description: "Live performance tonight! 🎤",
       hashtags: ["live", "concert", "music"],
+      userType: "fan" as const,
+      postedTime: "3h",
     },
   ]
 
