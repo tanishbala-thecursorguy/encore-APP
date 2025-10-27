@@ -38,7 +38,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setThemeState(newTheme)
     localStorage.setItem('theme', newTheme)
     
-    // Apply theme to html element
+    // Apply theme to html element immediately
     if (typeof document !== 'undefined') {
       document.documentElement.className = newTheme
       
@@ -50,6 +50,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       } else {
         document.documentElement.removeAttribute('data-star-color')
       }
+      
+      // Force re-render by adding class to body
+      document.body.className = `theme-${newTheme}`
     }
   }
 

@@ -58,6 +58,8 @@ export default function ThemesPage() {
 
   const handleThemeChange = (themeId: string) => {
     setThemeFunction(themeId)
+    // Force immediate update
+    window.location.href = '/' // Navigate to home to see changes
   }
 
   return (
