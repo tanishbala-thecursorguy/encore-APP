@@ -79,12 +79,13 @@ export default function WhopStylePage() {
   const router = useRouter()
   const [selectedCommunity, setSelectedCommunity] = useState(communities[1])
   const [selectedChannel, setSelectedChannel] = useState(channels[0])
-  const [activeTab, setActiveTab] = useState('Chat')
+  const [activeTab, setActiveTab] = useState('Feed')
+  const [showChat, setShowChat] = useState(false)
 
   return (
     <div className="flex h-screen bg-black text-white overflow-hidden">
       {/* Left Sidebar */}
-      <div className="w-20 border-r border-[#01302E]/30 bg-black/50 backdrop-blur-sm flex flex-col items-center py-6 gap-4 fixed left-0 top-0 bottom-0">
+      <div className="w-20 border-r border-[#01302E]/30 bg-black/50 backdrop-blur-sm flex flex-col items-center py-6 gap-4 fixed left-0 top-0 bottom-0 z-20">
         {communities.map((community) => (
           <motion.button
             key={community.id}
