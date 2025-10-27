@@ -105,11 +105,23 @@ export function StarsBackground({
     [offsetX, offsetY, factor],
   );
 
+  // Get theme from localStorage for background color
+  const getThemeBg = () => {
+    if (typeof window !== 'undefined') {
+      const theme = localStorage.getItem('theme') || 'black-stars'
+      if (theme === 'white-black' || theme === 'white-stars') {
+        return 'bg-white'
+      }
+    }
+    return 'bg-black'
+  }
+
   return (
     <div
       data-slot="stars-background"
       className={cn(
-        "relative size-full overflow-hidden bg-black",
+        "relative size-full overflow-hidden",
+        getThemeBg(),
         className,
       )}
       onMouseMove={handleMouseMove}
