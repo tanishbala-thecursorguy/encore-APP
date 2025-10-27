@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { 
   Settings, 
@@ -18,7 +18,8 @@ import {
   Share,
   Bookmark,
   ArrowLeft,
-  MoreVertical
+  MoreVertical,
+  Palette
 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -76,6 +77,7 @@ const profilePosts = [
 export default function ProfilePage() {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('Posts')
+  const [showSettingsMenu, setShowSettingsMenu] = useState(false)
 
   return (
     <StarsBackground className="min-h-screen" starColor="#10b981">
@@ -93,9 +95,45 @@ export default function ProfilePage() {
             <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
               <Share2 size={24} />
             </button>
-            <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
-              <MoreVertical size={24} />
-            </button>
+            <div className="relative">
+              <button 
+                onClick={() => setShowSettingsMenu(!showSettingsMenu)}
+                className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+              >
+                <MoreVertical size={24} />
+              </button>
+              
+              {/* Settings Menu */}
+              {showSettingsMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute right-0 top-12 bg-black border border-gray-800 rounded-lg shadow-xl py-2 min-w-[200px] z-50"
+                >
+                  <button
+                    onClick={() => {
+                      setShowSettingsMenu(false)
+                      router.push('/settings')
+                    }}
+                    className="w-full px-4 py-3 text-left hover:bg-gray-900 flex items-center gap-3"
+                  >
+                    <Settings size={18} />
+                    <span>Settings</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowSettingsMenu(false)
+                      router.push('/themes')
+                    }}
+                    className="w-full px-4 py-3 text-left hover:bg-gray-900 flex items-center gap-3"
+                  >
+                    <Settings size={18} />
+                    <span>Themes</span>
+                  </button>
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
 
