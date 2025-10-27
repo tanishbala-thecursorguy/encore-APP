@@ -50,26 +50,7 @@ const posts = [
 const stickers = ['🔥', '💫', '🎧', '🎉', '❤️', '😎', '✨', '🎵']
 
 export default function FriendZonePage() {
-  const [activePost, setActivePost] = useState<number | null>(null)
-  const [comment, setComment] = useState('')
-  const [showStickerPicker, setShowStickerPicker] = useState<number | null>(null)
-  const [selectedSticker, setSelectedSticker] = useState<{postId: number, sticker: string} | null>(null)
-  const [likedPosts, setLikedPosts] = useState<number[]>([])
-  const [showCommentsModal, setShowCommentsModal] = useState(false)
-  const [currentPostId, setCurrentPostId] = useState<number | null>(null)
   const router = useRouter()
-
-  const toggleLike = (postId: number) => {
-    setLikedPosts(prev =>
-      prev.includes(postId) ? prev.filter(id => id !== postId) : [...prev, postId]
-    )
-  }
-
-  const handleStickerSelect = (postId: number, sticker: string) => {
-    setSelectedSticker({ postId, sticker })
-    setTimeout(() => setSelectedSticker(null), 2000)
-    setShowStickerPicker(null)
-  }
 
   return (
     <StarsBackground starColor="#10b981" className="min-h-screen w-full text-white pb-32">
