@@ -1,109 +1,87 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { 
   MessageSquare, 
   Bell, 
   AlertCircle, 
   CheckCircle, 
   Users, 
-  Video, 
-  Image as ImageIcon, 
-  Newspaper,
+  ChevronRight,
   Star,
   Plus,
   UserPlus,
   MoreVertical,
   TrendingUp,
-  ArrowLeft
+  ArrowLeft,
+  Copy,
+  Video,
+  Trophy,
+  ShoppingCart
 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { AnimeNavBarDemo } from '@/components/ui/anime-navbar-demo'
 
 const communities = [
-  { id: 1, name: 'Avelior', logo: '🤖', rating: 4.9, online: 1250 },
-  { id: 2, name: 'Encore', logo: '🎵', rating: 4.8, online: 980 },
-  { id: 3, name: 'GOB Agency', logo: '🚀', rating: 4.7, online: 750 },
-  { id: 4, name: 'Builders Club', logo: '🏗️', rating: 4.9, online: 1100 },
-  { id: 5, name: 'Creators Lounge', logo: '✨', rating: 4.6, online: 890 },
-  { id: 6, name: 'Alpha Chat', logo: '💬', rating: 4.8, online: 650 },
+  { id: 1, name: 'KickScope', logo: '🎯', rating: 0, online: 1, color: 'red', tagline: 'KICKSCOPE' },
+  { id: 2, name: 'Learn German', logo: '🇩🇪', rating: 0, online: 1, color: 'orange', tagline: 'Deutsch lernen' },
+  { id: 3, name: 'Avelior', logo: '🤖', rating: 4.9, online: 1250, color: 'blue', tagline: 'AI Community' },
+  { id: 4, name: 'GOB Agency', logo: '🚀', rating: 4.7, online: 750, color: 'yellow', tagline: 'Build Together' },
 ]
 
 const channels = [
-  { name: 'Chat', icon: MessageSquare, unread: 3 },
-  { name: 'Announcements', icon: Bell, unread: 1 },
-  { name: 'Feedback', icon: AlertCircle, unread: 0 },
-  { name: 'Wins', icon: CheckCircle, unread: 0 },
-  { name: 'Discussion', icon: Users, unread: 5 },
+  { name: 'Announcements', icon: Bell, subItems: [] },
+  { name: 'Livestreams', icon: Video, subItems: [] },
 ]
 
-const tabs = ['Chat', 'Feed', 'News', 'Videos', 'Pictures']
+const chatChannels = [
+  { name: 'Chat DE', icon: MessageSquare, color: 'orange' },
+  { name: 'Chat EN', icon: MessageSquare, color: 'orange' },
+  { name: 'Wins', icon: Trophy, color: 'yellow' },
+]
 
-const mockPosts = [
-  {
-    id: 1,
-    username: 'dj_wave',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
-    time: '2h',
-    content: 'Just dropped a new track! Check it out 🎧',
-    likes: 234,
-    comments: 45,
-    type: 'text'
-  },
-  {
-    id: 2,
-    username: 'encore_music',
-    avatar: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100&h=100&fit=crop',
-    time: '5h',
-    content: 'Live performance tonight at 8pm EST',
-    likes: 189,
-    comments: 32,
-    type: 'text'
-  },
-  {
-    id: 3,
-    username: 'producer_life',
-    avatar: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=100&h=100&fit=crop',
-    time: '1d',
-    content: 'New studio setup complete! 🎹',
-    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&h=600&fit=crop',
-    likes: 456,
-    comments: 67,
-    type: 'image'
-  },
+const integrations = [
+  { name: 'Discord Free', icon: '💜', logo: '💜' },
+]
+
+const playChannels = [
+  { name: 'KickScope Wheel', icon: '🎰', color: 'red' },
 ]
 
 export default function WhopStylePage() {
   const router = useRouter()
-  const [selectedCommunity, setSelectedCommunity] = useState(communities[1])
-  const [selectedChannel, setSelectedChannel] = useState(channels[0])
-  const [activeTab, setActiveTab] = useState('Feed')
-  const [showChat, setShowChat] = useState(false)
+  const [selectedCommunity, setSelectedCommunity] = useState(communities[0])
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
+  const [activeTab, setActiveTab] = useState('Recent activity')
+
+  const toggleSection = (section: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }))
+  }
 
   return (
     <div className="flex h-screen bg-black text-white overflow-hidden">
-      {/* Left Sidebar */}
-      <div className="w-20 border-r border-[#01302E]/30 bg-black/50 backdrop-blur-sm flex flex-col items-center py-6 gap-4 fixed left-0 top-0 bottom-0 z-20">
+      {/* Left Sidebar - Communities */}
+      <div className="w-16 border-r border-gray-800 bg-black flex flex-col items-center py-4 gap-3 fixed left-0 top-0 bottom-0 z-30">
         {communities.map((community) => (
           <motion.button
             key={community.id}
             onClick={() => setSelectedCommunity(community)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className={`relative w-14 h-14 rounded-full flex items-center justify-center text-2xl transition-all ${
+            className={`relative w-12 h-12 rounded-lg flex items-center justify-center text-xl transition-all ${
               selectedCommunity.id === community.id
-                ? 'bg-[#01302E] border-2 border-green-400 shadow-lg shadow-green-400/20'
-                : 'bg-gray-900 hover:bg-gray-800 border border-gray-700'
+                ? 'bg-gray-900 border-2 border-white'
+                : 'hover:bg-gray-900'
             }`}
           >
             {community.logo}
             {selectedCommunity.id === community.id && (
-              <motion.div
-                layoutId="communityIndicator"
-                className="absolute -bottom-1 w-8 h-1 bg-green-400 rounded-full"
-              />
+              <div className="absolute -left-1 w-1 h-8 bg-white rounded-full" />
             )}
           </motion.button>
         ))}
@@ -111,177 +89,221 @@ export default function WhopStylePage() {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="w-14 h-14 rounded-full bg-[#01302E] border-2 border-green-400/30 flex items-center justify-center text-green-400 hover:border-green-400 transition-all"
+          className="w-12 h-12 rounded-lg bg-gray-900 hover:bg-gray-800 flex items-center justify-center text-white mt-2"
         >
           <Plus size={24} />
         </motion.button>
       </div>
 
-      {/* Middle Panel */}
-      <div className="w-80 border-r border-[#01302E]/30 bg-black/50 backdrop-blur-sm flex flex-col overflow-hidden fixed left-20 top-0 bottom-0">
-        {/* Community Header */}
-        <div className="p-6 space-y-4 border-b border-[#01302E]/30">
-          <div className="flex items-center gap-2">
+      {/* Main Content */}
+      <div className="flex-1 ml-16 flex flex-col overflow-hidden">
+        {/* Header */}
+        <div className="p-6 border-b border-gray-800">
+          <div className="flex items-center gap-4 mb-4">
             <ArrowLeft 
               size={20} 
               className="cursor-pointer hover:text-green-400 transition-colors"
               onClick={() => router.push('/')}
             />
-            <h2 className="text-2xl font-bold">{selectedCommunity.name}</h2>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 text-yellow-400">
-              <Star size={18} className="fill-yellow-400" />
-              <span className="text-sm">{selectedCommunity.rating}</span>
+            <div className="w-12 h-12 rounded-lg bg-gray-900 flex items-center justify-center text-2xl">
+              {selectedCommunity.logo}
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full" />
-              <span className="text-sm text-gray-400">{selectedCommunity.online} online</span>
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold">{selectedCommunity.name}</h2>
+              <div className="flex items-center gap-3 text-sm text-gray-400 mt-1">
+                <div className="flex items-center gap-1">
+                  <Star size={14} className="fill-yellow-400 text-yellow-400" />
+                  <span>0,00 (0)</span>
+                </div>
+                <div className="flex items-center gap-1 text-green-400">
+                  <div className="w-2 h-2 bg-green-400 rounded-full" />
+                  <span>1 online</span>
+                </div>
+              </div>
             </div>
+            <MoreVertical className="text-gray-400 hover:text-white cursor-pointer" />
           </div>
 
+          {/* Tagline */}
+          <div className={`text-4xl font-black ${selectedCommunity.color === 'red' ? 'text-red-500' : selectedCommunity.color === 'orange' ? 'text-orange-500' : 'text-green-400'}`}>
+            {selectedCommunity.tagline}
+          </div>
+
+          {/* Copy Link Button */}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-[#01302E] hover:bg-[#024c46] text-white px-4 py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors"
+            className="mt-4 w-full bg-gray-800 hover:bg-gray-700 text-white px-4 py-3 rounded-lg font-medium flex items-center justify-center gap-2 transition-colors"
           >
-            <UserPlus size={18} />
-            Invite Members
+            <Copy size={18} />
+            Copy link
           </motion.button>
         </div>
 
-        {/* Support Section */}
-        <div className="p-6 border-b border-[#01302E]/30">
-          <h3 className="text-xs font-semibold text-gray-400 uppercase mb-3">Support</h3>
-          <div className="space-y-2">
-            <button className="w-full text-left px-3 py-2 hover:bg-[#01302E]/20 rounded-lg transition-colors">
-              Support Chat
+        {/* Expandable Sections */}
+        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2">
+          {/* Support */}
+          <div className="border border-gray-800 rounded-lg overflow-hidden">
+            <button
+              onClick={() => toggleSection('support')}
+              className="w-full flex items-center justify-between p-4 hover:bg-gray-900 transition-colors"
+            >
+              <span className="font-semibold">Support</span>
+              <ChevronRight 
+                size={20} 
+                className={`text-gray-400 transition-transform ${expandedSections.support ? 'rotate-90' : ''}`}
+              />
             </button>
-            <button className="w-full text-left px-3 py-2 hover:bg-[#01302E]/20 rounded-lg transition-colors">
-              Rate this community
-            </button>
+            {expandedSections.support && (
+              <div className="p-4 bg-gray-900/50">
+                <button className="w-full flex items-center gap-3 text-left hover:text-green-400 transition-colors">
+                  <Bell size={18} />
+                  <span>Start support chat</span>
+                </button>
+              </div>
+            )}
           </div>
-        </div>
 
-        {/* Channels */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-2">
-          <h3 className="text-xs font-semibold text-gray-400 uppercase mb-3">Community Channels</h3>
-          {channels.map((channel) => (
-            <motion.button
-              key={channel.name}
-              onClick={() => setSelectedChannel(channel)}
-              whileHover={{ x: 4 }}
-              className={`w-full text-left px-3 py-2.5 rounded-lg transition-colors flex items-center justify-between ${
-                selectedChannel.name === channel.name
-                  ? 'bg-[#01302E] text-green-400'
-                  : 'hover:bg-gray-900'
-              }`}
+          {/* Rate this community */}
+          <div className="border border-gray-800 rounded-lg overflow-hidden">
+            <button
+              onClick={() => toggleSection('rate')}
+              className="w-full flex items-center justify-between p-4 hover:bg-gray-900 transition-colors"
             >
-              <div className="flex items-center gap-2">
-                <channel.icon size={18} />
-                <span>{channel.name}</span>
-              </div>
-              {channel.unread > 0 && (
-                <span className="bg-green-400 text-black text-xs px-2 py-0.5 rounded-full font-bold">
-                  {channel.unread}
-                </span>
-              )}
-            </motion.button>
-          ))}
-        </div>
-      </div>
-
-      {/* Right Feed Panel */}
-      <div className="flex-1 ml-[400px] flex flex-col overflow-hidden">
-        {/* Tabs */}
-        <div className="flex items-center gap-1 px-6 pt-6 border-b border-[#01302E]/30">
-          {tabs.map((tab) => (
-            <motion.button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`relative px-4 py-3 text-sm font-medium transition-colors ${
-                activeTab === tab ? 'text-white' : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              {tab}
-              {activeTab === tab && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-400"
-                />
-              )}
-            </motion.button>
-          ))}
-        </div>
-
-        {/* Feed Content */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {mockPosts.map((post) => (
-            <motion.div
-              key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-[#01302E]/10 backdrop-blur-sm border border-[#01302E]/30 rounded-2xl p-5 hover:bg-[#01302E]/20 transition-all"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                  <Image
-                    src={post.avatar}
-                    alt={post.username}
-                    width={48}
-                    height={48}
-                    className="w-full h-full object-cover"
-                  />
+              <span className="font-semibold">Rate this community</span>
+              <ChevronRight 
+                size={20} 
+                className={`text-gray-400 transition-transform ${expandedSections.rate ? 'rotate-90' : ''}`}
+              />
+            </button>
+            {expandedSections.rate && (
+              <div className="p-4 bg-gray-900/50 flex items-center gap-2">
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={20} className="text-gray-400" />
+                  ))}
                 </div>
-                
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-semibold">{post.username}</span>
-                    <span className="text-xs text-gray-400">{post.time}</span>
-                    <MoreVertical size={16} className="text-gray-500 ml-auto" />
-                  </div>
-                  
-                  <p className="text-gray-200 mb-3">{post.content}</p>
-                  
-                  {post.type === 'image' && (
-                    <div className="w-full h-64 rounded-xl overflow-hidden mb-3">
-                      <Image
-                        src={post.image}
-                        alt="Post"
-                        width={600}
-                        height={400}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
-                  
-                  <div className="flex items-center gap-6 text-gray-400">
-                    <button className="flex items-center gap-2 hover:text-green-400 transition-colors">
-                      <TrendingUp size={18} />
-                      <span className="text-sm">{post.likes}</span>
-                    </button>
-                    <button className="flex items-center gap-2 hover:text-green-400 transition-colors">
-                      <MessageSquare size={18} />
-                      <span className="text-sm">{post.comments}</span>
-                    </button>
-                  </div>
-                </div>
+                <span className="text-sm text-gray-400">0 ratings</span>
               </div>
-            </motion.div>
-          ))}
+            )}
+          </div>
+
+          {/* Home / Channels */}
+          <div className="border border-gray-800 rounded-lg overflow-hidden">
+            <button
+              onClick={() => toggleSection('home')}
+              className="w-full flex items-center justify-between p-4 hover:bg-gray-900 transition-colors"
+            >
+              <span className="font-semibold">Home</span>
+              <ChevronRight 
+                size={20} 
+                className={`text-gray-400 transition-transform ${expandedSections.home ? 'rotate-90' : ''}`}
+              />
+            </button>
+            {expandedSections.home && (
+              <div className="bg-gray-900/50 space-y-1">
+                {channels.map((channel) => (
+                  <button
+                    key={channel.name}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-800 transition-colors"
+                  >
+                    <channel.icon size={18} />
+                    <span>{channel.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Chat */}
+          <div className="border border-gray-800 rounded-lg overflow-hidden">
+            <button
+              onClick={() => toggleSection('chat')}
+              className="w-full flex items-center justify-between p-4 hover:bg-gray-900 transition-colors"
+            >
+              <span className="font-semibold">Chat</span>
+              <ChevronRight 
+                size={20} 
+                className={`text-gray-400 transition-transform ${expandedSections.chat ? 'rotate-90' : ''}`}
+              />
+            </button>
+            {expandedSections.chat && (
+              <div className="bg-gray-900/50 space-y-1">
+                {chatChannels.map((channel) => (
+                  <button
+                    key={channel.name}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-800 transition-colors"
+                  >
+                    <MessageSquare size={18} className={channel.color === 'orange' ? 'text-orange-400' : 'text-yellow-400'} />
+                    <span>{channel.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Integrations */}
+          <div className="border border-gray-800 rounded-lg overflow-hidden">
+            <button
+              onClick={() => toggleSection('integrations')}
+              className="w-full flex items-center justify-between p-4 hover:bg-gray-900 transition-colors"
+            >
+              <span className="font-semibold">Integrations</span>
+              <ChevronRight 
+                size={20} 
+                className={`text-gray-400 transition-transform ${expandedSections.integrations ? 'rotate-90' : ''}`}
+              />
+            </button>
+            {expandedSections.integrations && (
+              <div className="bg-gray-900/50 space-y-1">
+                {integrations.map((integration) => (
+                  <button
+                    key={integration.name}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-800 transition-colors"
+                  >
+                    <span className="text-2xl">{integration.logo}</span>
+                    <span>{integration.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Play / Games */}
+          <div className="border border-gray-800 rounded-lg overflow-hidden">
+            <button
+              onClick={() => toggleSection('play')}
+              className="w-full flex items-center justify-between p-4 hover:bg-gray-900 transition-colors"
+            >
+              <span className="font-semibold">Play</span>
+              <ChevronRight 
+                size={20} 
+                className={`text-gray-400 transition-transform ${expandedSections.play ? 'rotate-90' : ''}`}
+              />
+            </button>
+            {expandedSections.play && (
+              <div className="bg-gray-900/50 space-y-1">
+                {playChannels.map((channel) => (
+                  <button
+                    key={channel.name}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-800 transition-colors"
+                  >
+                    <span className="text-2xl">{channel.icon}</span>
+                    <span>{channel.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Bottom Navigation Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-[9999] pointer-events-none bg-black pb-3">
-        <div className="flex justify-center pointer-events-auto ml-20">
+        <div className="flex justify-center pointer-events-auto">
           <AnimeNavBarDemo />
         </div>
       </div>
     </div>
   )
 }
-
-// Default export is not needed since we're using dynamic import
-
