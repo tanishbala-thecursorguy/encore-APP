@@ -6,8 +6,13 @@
   * {
     @apply border-border;
   }
-  body {
+  html, body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    height: 100%;
+  }
+  #__next {
+    height: 100%;
   }
 }
 

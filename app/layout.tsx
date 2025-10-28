@@ -20,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="overflow-x-hidden">
+      <body className={`${inter.className} overflow-x-hidden`}>
         <Providers>
           {children}
         </Providers>
@@ -32,6 +32,9 @@ export default function RootLayout({
               if ('scrollBehavior' in document.documentElement.style) {
                 document.documentElement.style.scrollBehavior = 'smooth';
               }
+              // Reset overflow styles on page load
+              document.body.style.overflow = 'auto';
+              document.documentElement.style.overflow = 'auto';
             `,
           }}
         />
